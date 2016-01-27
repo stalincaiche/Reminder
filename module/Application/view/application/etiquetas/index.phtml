@@ -1,0 +1,79 @@
+<h1>Etiquetas</h1>
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="panel-body">
+            <div class="row clearfix">
+                <div class="col-sm-12">
+                    <h3>Búsqueda</h3>                    
+                </div>                
+                <?php $formBusqueda = $this->formBusqueda; $form->prepare();?>
+                <?php echo $this->form()->openTag($formBusqueda); ?>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label >
+                                <?php
+                                    $etiquetas_nombre = $formBusqueda->get('etiquetas_nombre');
+                                    echo $etiquetas_nombre->getLabel();
+                                ?>
+                            </label>
+                            <?php
+                                echo $this->formInput($etiquetas_nombre);
+                                echo $this->formElementErrors($etiquetas_nombre);
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label >
+                                &nbsp;
+                            </label>
+                            <?php echo $this->formSubmit($formBusqueda->get('guardar'));?>
+                        </div>
+                    </div>                
+                <?php echo $this->form()->closeTag();  ?>
+            </div> 
+        </div> 
+    </div> 
+</div>
+<h3>Listado de Objetos</h3>
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>Objeto</th>            
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+    <?php $form= $this->form; $form->prepare();?>
+    <?php foreach ($this->objetos as $key => $objeto) : ?>
+        <tr>
+            <td>
+                <?php echo $this->escapeHtml($objeto->getObjetosNombre());?>
+            </td>         
+            <td>
+                <?php echo $this->form()->openTag($form); ?>
+                    <div class="col-md-3">
+                        <?php
+                            $objetos_id = $form->get('objetos_id');
+                            $form->get('objetos_id')->setAttribute('value', $objeto->getObjetosId());
+                            echo $this->formInput($objetos_id);
+                            $etiquetas_nombre = $form->get('etiquetas_nombre');
+                            echo $this->formInput($etiquetas_nombre);
+                        ?>
+                    </div>
+                    <?php echo $this->formSubmit($form->get('guardar'));?>
+                <?php echo $this->form()->closeTag();  ?>
+            </td>
+            <td> 
+                <?php 
+                    $etiquetas =  $this->RetornaEtiquetas($objeto->getObjetosId()); 
+                ?>
+                <?php foreach ($etiquetas as $keyy => $etiqueta) : ?>
+                    <a href="<?php echo $this->basePath() ?>/application/etiquetas/editar/<?php echo $etiqueta->getEtiquetasId() ?>" class=" btn-lg" >                       
+                        <?php echo $etiqueta->getEtiquetasNombre();?>
+                    </a>
+                <?php endforeach; ?>
+            </td>
+        </tr>
+     <?php endforeach; ?>
+    </table>
+</div>

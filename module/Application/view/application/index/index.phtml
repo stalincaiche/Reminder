@@ -1,0 +1,47 @@
+<div class="jumbotron">
+    <h1>
+        <?php echo sprintf($this->translate('Bienvenido a %sReminder%s'), '<span class="zf-green">', '</span>') ?>
+    </h1>
+    <p>
+        <?php echo sprintf($this->translate('%sReminder%s. Te ayuda a recordar lo objetos de GeneXus modificados durante la resolución de tus actividades. Esta aplicación está creada en PHP, MySQL sobre Zend Framework 2.'), '<a href="https://github.com/zendframework/ZendSkeletonApplication" target="_blank">', '</a>', \Zend\Version\Version::VERSION) ?>
+    </p>    
+</div>
+
+<div class="row">
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Actividades Activas') ?></h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    <?php echo sprintf($this->translate('Gestionas tus actividades. Agrega los objetos que modificas, asçi los recordarás a la hora de hacer los pases.'), '<a href="http://framework.zend.com/wiki/display/ZFDEV2/Home">', '</a>', '<a href="http://framework.zend.com/zf2/blog">', '</a>', '<a href="https://github.com/zendframework/zf2/issues">', '</a>') ?>
+                </p>
+                <p>
+                    <a class="btn btn-success pull-right" href="<?php echo $this->url('actividades', array('controller' => 'actividades', 'action' => 'index'))?>" >
+                        <?php echo $this->translate('Gestionar') ?> &raquo;
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Objetos Relacionados') ?></h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    <?php echo sprintf($this->translate('Asocia objetos a una palabra clave o etiqueta para facilitar su búsqueda.'), '<a href="http://framework.zend.com/wiki/display/ZFDEV2/Home">', '</a>', '<a href="http://framework.zend.com/zf2/blog">', '</a>', '<a href="https://github.com/zendframework/zf2/issues">', '</a>') ?>
+                </p>
+                <p>
+                    <a class="btn btn-success pull-right" href="<?php echo $this->url('etiquetas', array('controller' => 'etiquetas', 'action' => 'index'))?>" >
+                        <?php echo $this->translate('Ver') ?> &raquo;
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>    
+</div>

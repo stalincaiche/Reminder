@@ -1,0 +1,73 @@
+<?php
+	$title = 'Nuevo Objeto';
+ 	$this->headTitle($title);
+ 	$form= $this->form;
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form->setAttribute('action', $this->url('objetos', array('action' => 'guardar')));
+$form->prepare();
+?>
+<div class="row">
+    <div class="col-md-6 ">        
+        <div class="panel-body">
+            <div class="row clearfix">
+                <div class="col-sm-12">
+					<?php echo $this->form()->openTag($form); ?>
+						<div class="form-group">
+					    	<label >
+						    	<?php
+						            $objetos_actividad_id = $form->get('objetos_actividad_id');
+						            echo $objetos_actividad_id->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formInput($objetos_actividad_id);
+						        echo $this->formElementErrors($objetos_actividad_id);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
+						            $objetos_id = $form->get('objetos_id');
+						            echo $objetos_id->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formInput($objetos_id);
+						        echo $this->formElementErrors($objetos_id);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
+						            $objetos_nombre = $form->get('objetos_nombre');
+						            echo $objetos_nombre->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formInput($objetos_nombre);
+						        echo $this->formElementErrors($objetos_nombre);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
+						            $objetos_tipo = $form->get('objetos_tipo');
+						            echo $objetos_tipo->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formElement($objetos_tipo);
+						        echo $this->formElementErrors($objetos_tipo);
+						    ?>
+					  	</div>
+					  
+					  <?php echo $this->formSubmit($form->get('guardar'));?>
+					<?php echo $this->form()->closeTag();  ?>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>

@@ -1,0 +1,24 @@
+<h1>Búsqueda de Etiquetas</h1>
+<h3>Listado de resultados</h3>
+<div class="row">
+    <table class="table">
+        <tr>
+            <th>ID</th>            
+            <th>Nombre</th>
+            <th></th>
+        </tr>
+    <?php foreach ($this->etiquetas as $key => $etiqueta) : ?>
+        <tr>
+            <td>
+                <?php echo $this->escapeHtml($etiqueta->getEtiquetasId());?>
+            </td>
+            <td>
+                <?php echo $this->escapeHtml($etiqueta->getEtiquetasNombre());?>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/etiquetas/objetos/<?php echo $etiqueta->getEtiquetasId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-search"> Ver Objetos Relacionados</i></button>
+            </td>
+        </tr>
+     <?php endforeach; ?>
+    </table>
+</div>

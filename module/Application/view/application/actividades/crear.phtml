@@ -1,0 +1,61 @@
+<?php
+	$title = 'Nueva Actividad';
+ 	$this->headTitle($title);
+ 	$form= $this->form;
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$form->setAttribute('action', $this->url('actividades', array('action' => 'guardar')));
+$form->prepare();
+?>
+<div class="row">
+    <div class="col-md-6 ">        
+        <div class="panel-body">
+            <div class="row clearfix">
+                <div class="col-sm-12">
+					<?php echo $this->form()->openTag($form); ?>
+						<div class="form-group">
+					    	<label >
+						    	<?php
+						            $actividades_id = $form->get('actividades_id');
+						            echo $actividades_id->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formInput($actividades_id);
+						        echo $this->formElementErrors($actividades_id);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
+						            $actividades_nombre = $form->get('actividades_nombre');
+						            echo $actividades_nombre->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formInput($actividades_nombre);
+						        echo $this->formElementErrors($actividades_nombre);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
+						            $actividades_estado = $form->get('actividades_estado');
+						            echo $actividades_estado->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formElement($actividades_estado);
+						        echo $this->formElementErrors($actividades_estado);
+						    ?>
+					  	</div>
+					  
+					  <?php echo $this->formSubmit($form->get('guardar'));?>
+					<?php echo $this->form()->closeTag();  ?>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>
