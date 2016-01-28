@@ -60,9 +60,10 @@ CREATE TABLE `objetos` (
   `objetos_actividad_id` int(11) NOT NULL,
   `objetos_id` int(11) NOT NULL auto_increment,
   `objetos_nombre` varchar(45) NOT NULL,
-  `objetos_tipo` enum('T','WP','PR','ATR','TBL') NOT NULL,
+  `objetos_tipo` int(11) NOT NULL,
   PRIMARY KEY  (`objetos_id`,`objetos_actividad_id`),
   KEY `objetos_actividad_id_idx` (`objetos_actividad_id`),
+  KEY `objetos_tipo_id_idx` (`objetos_tipo`),
   CONSTRAINT `objetos_actividad_id` FOREIGN KEY (`objetos_actividad_id`) REFERENCES `actividades` (`actividades_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -85,6 +86,21 @@ CREATE TABLE `objetos_etiquetas` (
   CONSTRAINT `fk_objetos_id` FOREIGN KEY (`objetos_id`) REFERENCES `objetos` (`objetos_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tipo_objeto`
+--
+
+DROP TABLE IF EXISTS `tipo_objeto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tipo_objeto` (
+  `tipo_objeto_id` int(11) NOT NULL auto_increment,
+  `tipo_objeto_nombre` varchar(45) NOT NULL,
+  `tipo_objeto_estado` enum('A','I') NOT NULL,
+  PRIMARY KEY  (`tipo_objeto_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -95,4 +111,4 @@ CREATE TABLE `objetos_etiquetas` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-27  9:01:28
+-- Dump completed on 2016-01-28 17:46:57

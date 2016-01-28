@@ -13,35 +13,7 @@
         <td><?php echo $this->escapeHtml($objeto->getObjetosActividadId());?></td>
         <td><?php echo $this->escapeHtml($objeto->getObjetosId());?></td>
         <td><?php echo $this->escapeHtml($objeto->getObjetosNombre());?></td>
-        <td>
-            <?php
-                switch ($objeto->getObjetosTipo()) {                    
-                    case 'T':
-                        echo 'Transacción';
-                        break;
-
-                    case 'WP':
-                        echo 'Web Panel';
-                        break;
-
-                    case 'PR':
-                        echo 'Procedimiento';
-                        break;
-
-                    case 'ATR':
-                        echo 'Atributo';
-                        break;
-
-                    case 'TBL':
-                        echo 'Tabla';
-                        break;
-                    
-                    default:
-                        echo $objeto->getObjetosTipo();
-                        break;
-                }
-            ?>
-        </td>
+        <td><?php echo $this->escapeHtml($objeto->getTipoObjetoNombre());?></td>
         <td>        
             <button type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/update/<?php echo $objeto->getObjetosId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-edit"></i></button>
             <button type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/delete/<?php echo $objeto->getObjetosId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-trash"></i></button>

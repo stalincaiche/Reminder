@@ -86,7 +86,13 @@ class ObjetosEtiquetasDAO
             'objetos_nombre', 'objetos_actividad_id','objetos_tipo'
             ),
             'left'
-        );        
+        );
+        $select->join(
+            'tipo_objeto', 'tipo_objeto.tipo_objeto_id = objetos.objetos_tipo', array(
+            'tipo_objeto_nombre',
+            ),
+            'left'
+        );
         $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }

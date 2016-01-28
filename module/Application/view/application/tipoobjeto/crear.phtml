@@ -1,0 +1,61 @@
+<?php
+	$title = 'Nuevo Tipo';
+ 	$this->headTitle($title);
+ 	$form= $this->form;
+?>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+
+$form->prepare();
+?>
+<div class="row">
+    <div class="col-md-6 ">        
+        <div class="panel-body">
+            <div class="row clearfix">
+                <div class="col-sm-12">
+					<?php echo $this->form()->openTag($form); ?>
+						<div class="form-group">
+					    	<label >
+						    	<?php
+						            $tipo_objeto_id = $form->get('tipo_objeto_id');
+						            echo $tipo_objeto_id->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formInput($tipo_objeto_id);
+						        echo $this->formElementErrors($tipo_objeto_id);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
+						            $tipo_objeto_nombre = $form->get('tipo_objeto_nombre');
+						            echo $tipo_objeto_nombre->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formInput($tipo_objeto_nombre);
+						        echo $this->formElementErrors($tipo_objeto_nombre);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
+						            $tipo_objeto_estado = $form->get('tipo_objeto_estado');
+						            echo $tipo_objeto_estado->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formElement($tipo_objeto_estado);
+						        echo $this->formElementErrors($tipo_objeto_estado);
+						    ?>
+					  	</div>
+					  
+					  <?php echo $this->formSubmit($form->get('guardar'));?>
+					<?php echo $this->form()->closeTag();  ?>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>

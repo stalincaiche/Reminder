@@ -105,6 +105,21 @@ return array(
                     ),
                 ),
             ),
+            'tipoobjetos' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                    'route'    => '/application/tipoobjeto[/:action][/:id]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',                        
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Tipoobjeto',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -133,6 +148,7 @@ return array(
             'Application\Controller\Objetos' => Controller\ObjetosController::class,
             'Application\Controller\Etiquetas' => Controller\EtiquetasController::class,
             'Application\Controller\Admin' => Controller\AdminController::class,
+            'Application\Controller\Tipoobjeto' => Controller\TipoobjetoController::class,
         ),
     ),
     'view_manager' => array(

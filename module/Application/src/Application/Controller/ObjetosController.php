@@ -16,8 +16,9 @@ class ObjetosController extends AbstractActionController
 
 	private $objetosBO;
     private $etiquetasBO;
+    private $tipoObjetosBO;
 
-	public function getObjetosBO()
+    public function getObjetosBO()
     {
         if (!$this->objetosBO) {
             $sm = $this->getServiceLocator();
@@ -35,6 +36,16 @@ class ObjetosController extends AbstractActionController
         return $this->etiquetasBO;
     }
 
+
+    public function getTipoObjetosBO()
+    {
+        if (!$this->tipoObjetosBO) {
+            $sm = $this->getServiceLocator();
+            $this->tipoObjetosBO = $sm->get('Application\Model\TipoObjetosBO');
+        }
+        return $this->tipoObjetosBO;
+    }
+
     public function indexAction()
     {
         $actividad_id = (int)$this->params()->fromRoute('id', 0);
@@ -42,13 +53,9 @@ class ObjetosController extends AbstractActionController
         $form = new ObjetosForm("objetosform");
         $form->setAttribute('class', 'form-inline');
         $form->get('guardar')->setAttribute('value', 'Crear');
-        $tipos = array(
-                'T' => 'Transacción',
-                'WP' => 'Web Panel',
-                'PR' => 'Procedimiento',
-                'ATR' => 'Atributo',
-                'TBL' => 'Tabla',
-        );
+
+        $tipos = $this->getTipoObjetosBO()->obtenerCombo();
+
         $form->get('objetos_tipo')->setValueOptions($tipos);
         $form->get('objetos_actividad_id')->setValue($actividad_id);
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/objetos/guardar');
@@ -80,13 +87,8 @@ class ObjetosController extends AbstractActionController
         $form->bind($objeto);
         $form->get('guardar')->setAttribute('value', 'Editar');
 
-        $tipos = array(
-                'T' => 'Transacción',
-                'WP' => 'Web Panel',
-                'PR' => 'Procedimiento',
-                'ATR' => 'Atributo',
-                'TBL' => 'Tabla',
-        );
+
+        $tipos = $this->getTipoObjetosBO()->obtenerCombo();
         $form->get('objetos_tipo')->setValueOptions($tipos);
 
         
@@ -116,13 +118,7 @@ class ObjetosController extends AbstractActionController
         $form->bind($objeto);
         $form->get('guardar')->setAttribute('value', 'Editar');
 
-        $tipos = array(
-                'T' => 'Transacción',
-                'WP' => 'Web Panel',
-                'PR' => 'Procedimiento',
-                'ATR' => 'Atributo',
-                'TBL' => 'Tabla',
-        );
+        $tipos = $this->getTipoObjetosBO()->obtenerCombo();
         $form->get('objetos_tipo')->setValueOptions($tipos);
 
         
@@ -169,13 +165,7 @@ class ObjetosController extends AbstractActionController
 
         $form = new ObjetosForm();
         $form->get('guardar')->setValue('Agregar');
-        $tipos = array(
-                'T' => 'Transacción',
-                'WP' => 'Web Panel',
-                'PR' => 'Procedimiento',
-                'ATR' => 'Atributo',
-                'TBL' => 'Tabla',
-        );
+        $tipos = $this->getTipoObjetosBO()->obtenerCombo();
         $form->get('objetos_actividad_id')->setValue($id);
         $form->get('objetos_tipo')->setValueOptions($tipos);
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/objetos/guardar');
@@ -203,15 +193,8 @@ class ObjetosController extends AbstractActionController
 
         $form->setData($data);
         
-        if (!$form->isValid()) {            
-
-            $tipos = array(
-                'T' => 'Transacción',
-                'WP' => 'Web Panel',
-                'PR' => 'Procedimiento',
-                'ATR' => 'Atributo',
-                'TBL' => 'Tabla',
-            );            
+        if (!$form->isValid()) {                        
+            $tipos = $this->getTipoObjetosBO()->obtenerCombo();           
             $form->get('objetos_tipo')->setValueOptions($tipos);
 
             $modelView = new ViewModel(array('form' => $form));
@@ -222,6 +205,7 @@ class ObjetosController extends AbstractActionController
         $data = $form->getData();
 
         $id = $this->getObjetosBO()->guardar($data);
+
         return $this->redirect()->toRoute(
             'objetos',
             array(
@@ -253,13 +237,7 @@ class ObjetosController extends AbstractActionController
         
         if (!$form->isValid()) {            
 
-            $tipos = array(
-                'T' => 'Transacción',
-                'WP' => 'Web Panel',
-                'PR' => 'Procedimiento',
-                'ATR' => 'Atributo',
-                'TBL' => 'Tabla',
-            );            
+            $tipos = $this->getTipoObjetosBO()->obtenerCombo();       
             $form->get('objetos_tipo')->setValueOptions($tipos);
 
             $modelView = new ViewModel(array('form' => $form));

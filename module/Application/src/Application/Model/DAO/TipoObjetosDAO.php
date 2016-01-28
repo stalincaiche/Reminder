@@ -2,14 +2,14 @@
 namespace Application\Model\DAO;
 
 use Zend\Db\TableGateway\TableGateway;
-use Application\Model\Entity\Actividades;
+use Application\Model\Entity\TipoObjetos;
 
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Where;
 
 use Zend\Db\Sql\Predicate\Expression;
 
-class ActividadesDAO
+class TipoObjetosDAO
 {
 
     protected $tableGateway;
@@ -25,13 +25,13 @@ class ActividadesDAO
         return $resultSet;
     }
 
-    public function obtenerActivas()
+    public function obtenerActivos()
     {
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
-        $select->from('actividades');
+        $select->from('tipo_objeto');
         $select->where(array(
-            'actividades.actividades_estado' => 'A',
+            'tipo_objeto.tipo_objeto_estado' => 'A',
         ));        
         $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
@@ -42,7 +42,7 @@ class ActividadesDAO
         $id = (int)$id;
         $rowset = $this->tableGateway->select(
             array(
-                'actividades_id' => $id
+                'tipo_objeto_id' => $id
             )
         );
         $row = $rowset->current();
@@ -52,16 +52,15 @@ class ActividadesDAO
         return $row;
     }
 
-    public function guardar(Actividades $actividad)
+    public function guardar(TipoObjetos $actividad)
     {
-        $id = (int)$actividad->getActividadesId();
+        $id = (int)$actividad->getTipoObjetoId();
 
         if ($id == "") {
 
             $data = array(                
-                'actividades_nombre' => $actividad->getActividadesNombre(),
-                'actividades_fecha' => date("Y-m-d H:i:s"),
-                'actividades_estado' => $actividad->getActividadesEstado()           
+                'tipo_objeto_nombre' => $actividad->getTipoObjetoNombre(),
+                'tipo_objeto_estado' => $actividad->getTipoObjetoEstado()           
             );
 
             $this->tableGateway->insert($data);
@@ -70,11 +69,11 @@ class ActividadesDAO
         } else {
             if ($this->obtenerPorId($id)) {
                 $data = array(
-                    'actividades_nombre' => $actividad->getActividadesNombre(),
-                    'actividades_estado' => $actividad->getActividadesEstado()
+                    'tipo_objeto_nombre' => $actividad->getTipoObjetoNombre(),
+                    'tipo_objeto_estado' => $actividad->getTipoObjetoEstado()
                 );
 
-                $this->tableGateway->update($data, array('actividades_id' => $id));
+                $this->tableGateway->update($data, array('tipo_objeto_id' => $id));
                 return $id;
             } else {
                 throw new \Exception('El Id no existe!');
@@ -82,26 +81,8 @@ class ActividadesDAO
         }
     }
 
-    public function eliminar(Actividades $actividad)
+    public function eliminar(TipoObjetos $tipo)
     {
-        $this->tableGateway->delete(array('actividades_id' => $actividad->getActividadesId()));
-    }
-
-    public function finalizar(Actividades $actividad)
-    {
-        $data = array(
-            'actividades_estado' => 'F'
-        );
-
-        $this->tableGateway->update($data, array('actividades_id' => $actividad->getActividadesId()));
-    }
-
-    public function activar(Actividades $actividad)
-    {
-        $data = array(
-            'actividades_estado' => 'A'
-        );
-        // var_dump($actividad->getActividadesId());exit();
-        $this->tableGateway->update($data, array('actividades_id' => $actividad->getActividadesId()));
+        $this->tableGateway->delete(array('tipo_objeto_id' => $tipo->getTipoObjetoId()));
     }
 }

@@ -21,7 +21,16 @@ class ObjetosDAO
 
     public function obtenerTodos()
     {
-        $resultSet = $this->tableGateway->select();
+        $sql = new Sql($this->tableGateway->adapter);
+        $select = $sql->select();
+        $select->from('objetos');
+        $select->join(
+            'tipo_objeto', 'tipo_objeto.tipo_objeto_id = objetos.objetos_tipo', array(
+            'tipo_objeto_nombre',
+            ),
+            'left'
+        );        
+        $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }
 
@@ -32,7 +41,13 @@ class ObjetosDAO
         $select->from('objetos');
         $select->where(array(
             'objetos.objetos_actividad_id' => $actividad_id,
-        ));        
+        ));
+        $select->join(
+            'tipo_objeto', 'tipo_objeto.tipo_objeto_id = objetos.objetos_tipo', array(
+            'tipo_objeto_nombre',
+            ),
+            'left'
+        );        
         $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }
@@ -75,9 +90,10 @@ class ObjetosDAO
                 'objetos_nombre' => strtoupper($objeto->getObjetosNombre()),
                 'objetos_tipo' => $objeto->getObjetosTipo(),
             );
-
+            
             $this->tableGateway->insert($data);
             $lastId = $this->tableGateway->adapter->getDriver()->getConnection()->getLastGeneratedValue();
+            
             return $lastId;
         }
     }

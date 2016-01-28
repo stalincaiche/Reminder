@@ -115,7 +115,7 @@ class Module
                     $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(New TipoObjetos());
-                    return new TableGateway("objetos_etiquetas", $dbAdapter, NULL, $resultSetPrototype);
+                    return new TableGateway("tipo_objeto", $dbAdapter, NULL, $resultSetPrototype);
                 },
             ) ,
         );

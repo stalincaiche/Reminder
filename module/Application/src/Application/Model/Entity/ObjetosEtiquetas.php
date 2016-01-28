@@ -12,6 +12,7 @@ class ObjetosEtiquetas
     private $objetos_nombre;
     private $objetos_actividad_id;
     private $objetos_tipo;
+    private $tipo_objeto_nombre;
         
     public function getObjetosEtiquetasId()
     {
@@ -97,6 +98,18 @@ class ObjetosEtiquetas
         return $this;
     }
 
+    public function getTipoObjetoNombre()
+    {
+        return $this->tipo_objeto_nombre;
+    }
+
+    public function setTipoObjetoNombre($tipo_objeto_nombre)
+    {
+        $this->tipo_objeto_nombre = $tipo_objeto_nombre;
+
+        return $this;
+    }
+
     public function exchangeArray($data)
     {
         $this->objetos_etiquetas_id = (isset($data['objetos_etiquetas_id'])) ? $data['objetos_etiquetas_id'] : null;
@@ -106,6 +119,7 @@ class ObjetosEtiquetas
         $this->objetos_nombre = (isset($data['objetos_nombre'])) ? $data['objetos_nombre'] : null;
         $this->objetos_actividad_id = (isset($data['objetos_actividad_id'])) ? $data['objetos_actividad_id'] : null;
         $this->objetos_tipo = (isset($data['objetos_tipo'])) ? $data['objetos_tipo'] : null;
+        $this->tipo_objeto_nombre = (isset($data['tipo_objeto_nombre'])) ? $data['tipo_objeto_nombre'] : null;
     }
 
     public function getArrayCopy()

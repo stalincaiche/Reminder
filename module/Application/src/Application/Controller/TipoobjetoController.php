@@ -5,8 +5,8 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-use Application\Form\Actividades\ActividadesForm;
-use Application\Form\Actividades\ActividadesFormValidator;
+use Application\Form\Tipoobjetos\TipoobjetosForm;
+use Application\Form\Tipoobjetos\TipoobjetosFormValidator;
 
 class TipoobjetoController extends AbstractActionController
 {
@@ -25,110 +25,110 @@ class TipoobjetoController extends AbstractActionController
     public function indexAction()
     {
         $datos = array(
-            'tipos' => $this->getTipoObjetosBO()->obtenerActivas() ,            
+            'tipos' => $this->getTipoObjetosBO()->obtenerTodos() ,            
         );
         return new ViewModel($datos);
     }
 
-    // public function editarAction()
-    // {
-    //     $id = (int)$this->params()->fromRoute('id', 0);
+    public function editarAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
 
-    //     if (!$id) {
-    //         return $this->redirect()->toRoute('actividades');
-    //     }
+        if (!$id) {
+            return $this->redirect()->toRoute('tipoobjetos');
+        }
 
-    //     $form = new ActividadesForm("actividadesform");
-    //     $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/actividades/guardar');
+        $form = new TipoobjetosForm();
+        $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/tipoobjeto/guardar');
 
-    //     $actividad = $this->getTipoObjetosBO()->obtenerPorId($id);
+        $tipo = $this->getTipoObjetosBO()->obtenerPorId($id);
 
-    //     if (!is_object($actividad)) {
-    //         return $this->redirect()->toRoute('actividades');
-    //     }
+        if (!is_object($tipo)) {
+            return $this->redirect()->toRoute('tipoobjetos');
+        }
 
-    //     $form->bind($actividad);
-    //     $form->get('guardar')->setAttribute('value', 'Editar');
+        $form->bind($tipo);
+        $form->get('guardar')->setAttribute('value', 'Editar');
 
-    //     $estados = array(
-    //             'A' => 'Activo',
-    //             'F' => 'Finalizado',
-    //     );
-    //     $form->get('actividades_estado')->setValueOptions($estados);
+        $estados = array(
+                'A' => 'Activo',
+                'I' => 'Inactivo',
+        );
+        $form->get('tipo_objeto_estado')->setValueOptions($estados);
 
         
-    //     $modelView = new ViewModel(array('form' => $form));
+        $modelView = new ViewModel(array('form' => $form));
 
-    //     $modelView->setTemplate('application/actividades/crear');
-    //     return $modelView;
-    // }
+        $modelView->setTemplate('application/tipoobjeto/crear');
+        return $modelView;
+    }
 
-    // public function crearAction()
-    // {
-    //     $form = new ActividadesForm();
-    //     $form->get('guardar')->setValue('Agregar');
-    //     $estados = array(
-    //             'A' => 'Activo',
-    //             'F' => 'Finalizado',
-    //     );
-    //     $form->get('actividades_estado')->setValueOptions($estados);
-    //     $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/actividades/guardar');
+    public function crearAction()
+    {
+        $form = new TipoobjetosForm();
+        $form->get('guardar')->setValue('Agregar');
+        $estados = array(
+                'A' => 'Activo',
+                'I' => 'Inactivo',
+        );
+        $form->get('tipo_objeto_estado')->setValueOptions($estados);
+        $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/tipoobjeto/guardar');
 
-    //     $datos = array(
-    //         'form' => $form
-    //     );
+        $datos = array(
+            'form' => $form
+        );
 
-    //     return new ViewModel($datos);
-    // }
+        return new ViewModel($datos);
+    }
 
-    // public function guardarAction()
-    // {
-    //     if (!$this->request->isPost()) {
-    //         return $this->redirect()->toRoute(
-    //             'actividades',
-    //             array('controller' => 'actividades')
-    //         );
-    //     }
+    public function guardarAction()
+    {
+        if (!$this->request->isPost()) {
+            return $this->redirect()->toRoute(
+                'tipoobjetos',
+                array('controller' => 'tipoobjeto')
+            );
+        }
 
-    //     $form = new ActividadesForm("actividadesform");
-    //     $form->setInputFilter(new ActividadesFormValidator());
-    //     // Obtenemos los datos desde el Formulario con POST data:
-    //     $data = $this->request->getPost();
+        $form = new TipoobjetosForm("tipoobjetosform");
+        $form->setInputFilter(new TipoobjetosFormValidator());
+        // Obtenemos los datos desde el Formulario con POST data:
+        $data = $this->request->getPost();
 
-    //     $form->setData($data);
+        $form->setData($data);
 
-    //     if (!$form->isValid()) {            
+        if (!$form->isValid()) {            
 
-    //         $estados = array(
-    //             'A' => 'Activo',
-    //             'F' => 'Finalizado',
-    //         );
-    //         $form->get('actividades_estado')->setValueOptions($estados);
+            $estados = array(
+                'A' => 'Activo',
+                'I' => 'Inactivo',
+            );
+            $form->get('tipo_objeto_estado')->setValueOptions($estados);
 
-    //         $modelView = new ViewModel(array('form' => $form));
-    //         $modelView->setTemplate('application/actividades/crear');
-    //         return $modelView;
-    //     }
+            $modelView = new ViewModel(array('form' => $form));
+            $modelView->setTemplate('application/tipoobjeto/crear');
+            return $modelView;
+        }
 
-    //     $id = $this->getTipoObjetosBO()->guardar($form->getData());
-    //     return $this->redirect()->toRoute(
-    //         'actividades',
-    //         array(
-    //             'controller' => 'actividades',
-    //             'action' => 'index'                
-    //         )
-    //     );
-    // }
+        $id = $this->getTipoObjetosBO()->guardar($form->getData());
+        return $this->redirect()->toRoute(
+            'tipoobjetos',
+            array(
+                'controller' => 'tipoobjeto',
+                'action' => 'index'                
+            )
+        );
+    }
 
-    // public function eliminarAction()
-    // {
-    //     $id = (int)$this->params()->fromRoute('id', 0);
-    //     if (!$id) {
-    //         return $this->redirect()->toRoute('actividades');
-    //     }
+    public function eliminarAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('tipoobjetos');
+        }
 
-    //     $this->getTipoObjetosBO()->eliminar($id);
+        $this->getTipoObjetosBO()->eliminar($id);
 
-    //     return $this->redirect()->toRoute('actividades');
-    // }    
+        return $this->redirect()->toRoute('tipoobjetos');
+    }
 }
