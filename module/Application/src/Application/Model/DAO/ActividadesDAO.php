@@ -97,4 +97,13 @@ class ActividadesDAO
 
         $this->tableGateway->update($data, array('actividades_id' => $actividad->getActividadesId()));
     }
+
+    public function activar(Actividades $actividad)
+    {
+        $data = array(
+            'actividades_estado' => 'A'
+        );
+        // var_dump($actividad->getActividadesId());exit();
+        $this->tableGateway->update($data, array('actividades_id' => $actividad->getActividadesId()));
+    }
 }

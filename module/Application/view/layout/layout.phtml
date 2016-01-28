@@ -39,7 +39,18 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li class=""><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Inicio') ?></a></li>
-                        <li class=""><a href="<?php echo $this->url('actividades') ?>"><?php echo $this->translate('Actividades') ?></a></li>
+                        <li class=""><a href="<?php echo $this->url('actividades') ?>"><?php echo $this->translate('Mis Actividades') ?></a></li>
+                        <li class=""><a href="<?php echo $this->url('etiquetas') ?>"><?php echo $this->translate('Etiquetas') ?></a></li>
+                        <li class=""><a href="<?php echo $this->url('administracion') ?>"><?php echo $this->translate('Administrar') ?></a></li>
+                        <li class=""><a href="<?php 
+                        echo $this->url(
+                            'administracion',
+                            array(
+                                'controller' => 'admin',
+                                'action' => 'colaborar'                
+                            )
+                        ) 
+                        ?>"><?php echo $this->translate('Colaborar') ?></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>

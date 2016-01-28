@@ -25,6 +25,9 @@ use Application\Model\BO\EtiquetasBO;
 use Application\Model\Entity\Etiquetas;
 use Application\Model\Entity\ObjetosEtiquetas;
 
+use Application\Model\BO\TipoObjetosBO;
+use Application\Model\Entity\TipoObjetos;
+
 class Module
 {
     public function onBootstrap(MvcEvent $e)
@@ -99,6 +102,19 @@ class Module
                     $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(New ObjetosEtiquetas());
+                    return new TableGateway("objetos_etiquetas", $dbAdapter, NULL, $resultSetPrototype);
+                },
+                'Application\Model\TipoObjetosBO' => function ($sm)
+                {
+                    $tableGateway = $sm->get("TipoObjetosTableGateway");
+                    $tipoObjetosBO = new TipoObjetosBO($tableGateway);
+                    return $tipoObjetosBO;
+                },
+                'TipoObjetosTableGateway' => function ($sm)
+                {
+                    $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(New TipoObjetos());
                     return new TableGateway("objetos_etiquetas", $dbAdapter, NULL, $resultSetPrototype);
                 },
             ) ,

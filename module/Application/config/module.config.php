@@ -90,6 +90,21 @@ return array(
                     ),
                 ),
             ),
+            'administracion' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                    'route'    => '/application/admin[/:action][/:id]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',                        
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Admin',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -117,6 +132,7 @@ return array(
             'Application\Controller\Actividades' => Controller\ActividadesController::class,
             'Application\Controller\Objetos' => Controller\ObjetosController::class,
             'Application\Controller\Etiquetas' => Controller\EtiquetasController::class,
+            'Application\Controller\Admin' => Controller\AdminController::class,
         ),
     ),
     'view_manager' => array(

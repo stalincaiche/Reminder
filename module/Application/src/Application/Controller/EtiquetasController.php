@@ -157,7 +157,6 @@ class EtiquetasController extends AbstractActionController
             )
         );
 
-        $modelView->setTemplate('application/etiquetas/crear');
         return $modelView;
     }
 
@@ -171,6 +170,18 @@ class EtiquetasController extends AbstractActionController
         $this->getEtiquetasBO()->eliminar($id);
 
         return $this->redirect()->toRoute('etiquetas');
+    }
+
+    public function eliminaradminAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('etiquetas');
+        }
+
+        $this->getEtiquetasBO()->eliminar($id);
+
+        return $this->redirect()->toRoute('etiquetas', array('controller' => 'etiquetas', 'action' => 'listado'));
     }
 
     public function buscarAction()
@@ -279,5 +290,102 @@ class EtiquetasController extends AbstractActionController
                 'id' => $data['objetos_id']
             )
         );
+    }
+
+    public function listadoAction()
+    {
+        $datos = array(
+            'etiquetas' => $this->getEtiquetasBO()->obtenerTodosCount() ,            
+        );
+        return new ViewModel($datos);
+    }
+
+    public function crearAction()
+    {
+        $form = new EtiquetasForm("etiquetasform");
+        $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/etiquetas/ingresar');
+
+        $form->get('guardar')->setAttribute('value', 'Guardar');
+        
+        $modelView = new ViewModel(
+            array(
+                'form' => $form,                
+            )
+        );
+
+        return $modelView;
+    }
+
+    public function ingresarAction()
+    {
+        if (!$this->request->isPost()) {
+            return $this->redirect()->toRoute(
+                'etiquetas',
+                array(
+                    'controller' => 'etiquetas',
+                    'action' => 'listado'
+                )
+            );
+        }
+
+        $form = new EtiquetasForm("etiquetasform");
+        $form->setInputFilter(new EtiquetasFormValidator());
+        
+        $data = $this->request->getPost();
+
+        $form->setData($data);
+        
+        if (!$form->isValid()) {
+
+            return $this->redirect()->toRoute(
+                'etiquetas',
+                array(
+                    'controller' => 'etiquetas',
+                    'action' => 'listado'
+                )
+            );
+        }
+
+        $data = $form->getData();
+
+        $id = $this->getEtiquetasBO()->ingresar($data);
+        return $this->redirect()->toRoute(
+            'etiquetas',
+            array(
+                'controller' => 'etiquetas',
+                'action' => 'listado'
+            )
+        );
+    }
+
+    public function updateAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+
+        if (!$id) {
+            return $this->redirect()->toRoute('etiquetas');
+        }
+
+        $form = new EtiquetasForm("etiquetasform");
+        $form->setAttribute('class', 'form-inline');
+        $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/etiquetas/ingresar');
+
+        $etiqueta = $this->getEtiquetasBO()->obtenerPorId($id);
+
+        if (!is_object($etiqueta)) {
+            return $this->redirect()->toRoute('etiquetas');
+        }
+
+        $form->bind($etiqueta);
+        $form->get('guardar')->setAttribute('value', 'Editar');
+        
+        $modelView = new ViewModel(
+            array(
+                'form' => $form,
+                'id' => $id
+            )
+        );
+        $modelView->setTemplate('application/etiquetas/crear');
+        return $modelView;
     }
 }

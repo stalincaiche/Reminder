@@ -27,6 +27,29 @@ class EtiquetasBO
         return $etiquetas;
     }
 
+    public function obtenerTodosCount()
+    {
+        $etiquetasDAO = new EtiquetasDAO($this->etiquetasTableGateway);
+        $etiquetas = $etiquetasDAO->obtenerTodosCount();
+        unset($etiquetasDAO);
+        return $etiquetas;
+    }
+
+    public function ingresar($formData)
+    {
+        $etiqueta = new Etiquetas();
+        $etiqueta->exchangeArray($formData);
+        $etiquetasDAO = new EtiquetasDAO($this->etiquetasTableGateway);
+        try {
+            $etiqueta = $etiquetasDAO->guardar($etiqueta);
+        }
+        catch(\Exception $e) {
+            $etiqueta = 0;
+        }
+        unset($EtiquetasDAO);
+        return $etiqueta;
+    }
+
     public function guardar($formData)
     {
         $db = $this->etiquetasTableGateway->adapter;

@@ -1,0 +1,33 @@
+<h1>Administrar Actividades</h1>
+
+<p>
+    <a class="btn btn-success" href="<?php echo $this->url('actividades', array('controller' => 'actividades', 'action'=>'crear'));?>">Nueva Actividad</a>
+</p>
+
+<table class="table">
+ <tr>
+     <th>ID</th>
+     <th>Nombre</th>
+     <th>Fecha</th>
+     <th>Estado</th>
+     <th>&nbsp;</th>
+ </tr>
+ <?php foreach ($this->actividades as $key => $actividad) : ?>
+ <tr>
+     <td><?php echo $this->escapeHtml($actividad->getActividadesId());?></td>
+     <td><?php echo $this->escapeHtml($actividad->getActividadesNombre());?></td>
+     <td><?php echo $this->escapeHtml($actividad->getActividadesFecha());?></td>
+     <td><?php if($actividad->getActividadesEstado() == "A"){echo"Activo";}else{echo"Finalizado";}?></td>
+     <td>
+        <button type="button" class="btn btn-info" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/index/<?php echo $actividad->getActividadesId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-list-alt"></i></button>        
+        <?php if($actividad->getActividadesEstado() == "F"):?>
+            <button type="button" class="btn btn-success" onclick="window.location='<?php echo $this->basePath() ?>/application/actividades/activar/<?php echo $actividad->getActividadesId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-ok"></i></button>
+        <?php else:?>
+            <button type="button" class="btn btn-warning" onclick="window.location='<?php echo $this->basePath() ?>/application/actividades/finalizardos/<?php echo $actividad->getActividadesId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-remove"></i></button>        
+        <?php endif?>
+        <button type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/actividades/editar/<?php echo $actividad->getActividadesId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-edit"></i></button>
+        <button type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/actividades/eliminar/<?php echo $actividad->getActividadesId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-trash"></i></button>
+     </td>
+ </tr>
+ <?php endforeach; ?>
+ </table>

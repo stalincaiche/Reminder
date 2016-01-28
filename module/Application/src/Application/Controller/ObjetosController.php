@@ -96,6 +96,42 @@ class ObjetosController extends AbstractActionController
         return $modelView;
     }
 
+    public function updateAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+
+        if (!$id) {
+            return $this->redirect()->toRoute('objetos');
+        }
+
+        $form = new ObjetosForm("objetosform");
+        $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/objetos/ingresar');
+
+        $objeto = $this->getObjetosBO()->obtenerPorId($id);
+
+        if (!is_object($objeto)) {
+            return $this->redirect()->toRoute('objetos');
+        }
+
+        $form->bind($objeto);
+        $form->get('guardar')->setAttribute('value', 'Editar');
+
+        $tipos = array(
+                'T' => 'Transacción',
+                'WP' => 'Web Panel',
+                'PR' => 'Procedimiento',
+                'ATR' => 'Atributo',
+                'TBL' => 'Tabla',
+        );
+        $form->get('objetos_tipo')->setValueOptions($tipos);
+
+        
+        $modelView = new ViewModel(array('form' => $form));
+
+        $modelView->setTemplate('application/objetos/crear');
+        return $modelView;
+    }
+
     public function etiquetasAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
@@ -196,6 +232,53 @@ class ObjetosController extends AbstractActionController
         );
     }
 
+    public function ingresarAction()
+    {
+        if (!$this->request->isPost()) {
+            return $this->redirect()->toRoute(
+                'objetos',
+                array(
+                    'controller' => 'objetos',
+                    'action' => 'listado',
+                )
+            );
+        }
+
+        $form = new ObjetosForm("objetosform");
+        $form->setInputFilter(new ObjetosFormValidator());
+        // Obtenemos los datos desde el Formulario con POST data:
+        $data = $this->request->getPost();
+
+        $form->setData($data);
+        
+        if (!$form->isValid()) {            
+
+            $tipos = array(
+                'T' => 'Transacción',
+                'WP' => 'Web Panel',
+                'PR' => 'Procedimiento',
+                'ATR' => 'Atributo',
+                'TBL' => 'Tabla',
+            );            
+            $form->get('objetos_tipo')->setValueOptions($tipos);
+
+            $modelView = new ViewModel(array('form' => $form));
+            $modelView->setTemplate('application/objetos/crear');
+            return $modelView;
+        }
+        
+        $data = $form->getData();
+
+        $id = $this->getObjetosBO()->guardar($data);
+        return $this->redirect()->toRoute(
+            'objetos',
+            array(
+                'controller' => 'objetos',
+                'action' => 'listado',
+            )
+        );
+    }
+
     public function eliminarAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
@@ -214,5 +297,32 @@ class ObjetosController extends AbstractActionController
                 'id' => $id2
             )
         );
+    }
+
+    public function deleteAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        
+        if (!$id) {
+            return $this->redirect()->toRoute('objetos');
+        }
+
+        $this->getObjetosBO()->eliminar($id);
+
+        return $this->redirect()->toRoute(
+            'objetos',
+            array(
+                'controller' => 'objetos',
+                'action' => 'listado'                
+            )
+        );
+    }
+
+    public function listadoAction()
+    {
+        $datos = array(
+            'objetos' => $this->getObjetosBO()->obtenerTodos() ,            
+        );
+        return new ViewModel($datos);
     }
 }

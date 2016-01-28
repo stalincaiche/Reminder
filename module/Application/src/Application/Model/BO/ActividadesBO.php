@@ -77,4 +77,13 @@ class ActividadesBO
         $actividadesDAO->finalizar($actividad);
     }
 
+    public function activar($id)
+    {
+        $actividad = new Actividades();
+        $actividad->setActividadesId($id);
+
+        $actividadesDAO = new ActividadesDAO($this->tableGateway);
+        $actividadesDAO->activar($actividad);
+    }
+
 }

@@ -21,6 +21,7 @@ class ActividadesController extends AbstractActionController
         }
         return $this->actividadesBO;
     }
+
     public function indexAction()
     {
         $datos = array(
@@ -117,14 +118,6 @@ class ActividadesController extends AbstractActionController
                 'action' => 'index'                
             )
         );
-        // return $this->redirect()->toRoute(
-        //     'actividades',
-        //     array(
-        //         'controller' => 'actividades',
-        //         'action' => 'editar',
-        //         'id' => $id
-        //     )
-        // );
     }
 
     public function eliminarAction()
@@ -149,5 +142,57 @@ class ActividadesController extends AbstractActionController
         $this->getActividadesBO()->finalizar($id);
 
         return $this->redirect()->toRoute('actividades');
+    }
+    
+    public function finalizardosAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('actividades', 
+                array(
+                    'controller' => 'actividades',
+                    'action' => 'listado'
+                )
+            );
+        }
+
+        $this->getActividadesBO()->finalizar($id);
+
+        return $this->redirect()->toRoute('actividades', 
+            array(
+                'controller' => 'actividades',
+                'action' => 'listado'
+            )
+        );
+    }
+
+    public function activarAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('actividades', 
+                array(
+                    'controller' => 'actividades',
+                    'action' => 'listado'
+                )
+            );
+        }
+
+        $this->getActividadesBO()->activar($id);
+
+        return $this->redirect()->toRoute('actividades', 
+            array(
+                'controller' => 'actividades',
+                'action' => 'listado'
+            )
+        );
+    }
+
+    public function listadoAction()
+    {
+        $datos = array(
+            'actividades' => $this->getActividadesBO()->obtenerTodos() ,            
+        );
+        return new ViewModel($datos);
     }
 }

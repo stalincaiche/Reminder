@@ -25,6 +25,32 @@ class EtiquetasDAO
         return $resultSet;
     }
 
+    public function obtenerTodosCount()
+    {
+        $sql = new Sql($this->tableGateway->adapter);
+        $subQuery = $sql->select();
+        $subQuery->from('objetos_etiquetas');
+        $subQuery->columns(
+            array(
+                'count' => new \Zend\Db\Sql\Expression("COUNT(*)"),
+            )
+        );        
+        $subQuery->where('objetos_etiquetas.etiquetas_id = etiquetas.etiquetas_id');
+        
+        $mainSelect = $this->tableGateway->getSql()->select();
+        $mainSelect = $sql->select()->from('etiquetas');
+        $mainSelect->columns(
+            array(
+                'etiquetas_id',
+                'etiquetas_nombre',
+                'num' => new \Zend\Db\Sql\Expression("(" . @$subQuery->getSqlString($this->tableGateway->adapter->getPlatform()) . ")"),
+            )
+        );
+        // echo( $mainSelect->getSqlString());exit();
+        $resultSet = $this->tableGateway->selectWith($mainSelect);
+        return $resultSet;        
+    }
+
     public function obtenerPorNombre($nombre)
     {
         $sql = new Sql($this->tableGateway->adapter);
