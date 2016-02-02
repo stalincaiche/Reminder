@@ -1,6 +1,8 @@
 <?php if ($this->title){$this->headTitle()->append($this->title);} ?>
 <h1><span class="zf-green"><?php echo $this->escapeHtml($this->title); ?></span></h1>
 <br>
+<h3>Etiqueta: <span class="zf-green"><?php echo $this->etiqueta->getEtiquetasNombre(); ?></span></h3>
+<br>
 <table class="table table-hover demo-table-search" id="tablaObjetos">
     <thead>
         <tr>

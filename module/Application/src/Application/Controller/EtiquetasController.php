@@ -357,14 +357,16 @@ class EtiquetasController extends AbstractActionController
         $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
         $script = $renderer->render('application/etiquetas/js/objetos');
         $renderer->headScript()->appendScript($script, 'text/javascript');
-
+        $etiqueta = $this->getEtiquetasBO()->obtenerPorId($id);
+        // echo"<pre>";var_dump($etiqueta);exit();
         $objetos = $this->getEtiquetasBO()->obtenerObjetosPorEtiquetas($id);
 
         $modelView = new ViewModel(
             array(
                 'objetos' => $objetos,
                 'title' => 'Objetos asociados',
-                'etiqueta_id' => $id
+                'etiqueta_id' => $id,
+                'etiqueta' => $etiqueta
             )
         );
 

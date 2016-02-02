@@ -80,6 +80,23 @@ class ObjetosController extends AbstractActionController
         return new ViewModel($datos);
     }
 
+    public function verAction()
+    {
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+        $script = $renderer->render('application/objetos/js/ver');
+        $renderer->headScript()->appendScript($script, 'text/javascript');
+
+        $actividad_id = (int)$this->params()->fromRoute('id', 0);        
+
+        $datos = array(
+            'objetos' => $this->getObjetosBO()->obtenerTodosPorActividad($actividad_id) ,            
+            'actividad_id' => $actividad_id ,            
+            'title' =>  "Objetos y sus Etiquetas"
+        );
+        return new ViewModel($datos);
+    }
+
     public function editarAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
