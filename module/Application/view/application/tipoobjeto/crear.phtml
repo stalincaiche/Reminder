@@ -39,6 +39,18 @@ $form->prepare();
 					  	<div class="form-group">
 					    	<label >
 						    	<?php
+						            $tipo_objeto_icono = $form->get('tipo_objeto_icono');
+						            echo $tipo_objeto_icono->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formInput($tipo_objeto_icono);
+						        echo $this->formElementErrors($tipo_objeto_icono);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
 						            $tipo_objeto_estado = $form->get('tipo_objeto_estado');
 						            echo $tipo_objeto_estado->getLabel();
 						        ?>

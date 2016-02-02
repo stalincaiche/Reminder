@@ -98,6 +98,7 @@ CREATE TABLE `tipo_objeto` (
   `tipo_objeto_id` int(11) NOT NULL auto_increment,
   `tipo_objeto_nombre` varchar(45) NOT NULL,
   `tipo_objeto_estado` enum('A','I') NOT NULL,
+  `tipo_objeto_icono` varchar(45) default NULL,
   PRIMARY KEY  (`tipo_objeto_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -111,4 +112,4 @@ CREATE TABLE `tipo_objeto` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-28 17:46:57
+-- Dump completed on 2016-02-02 11:31:26

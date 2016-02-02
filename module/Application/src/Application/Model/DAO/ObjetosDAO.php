@@ -26,7 +26,7 @@ class ObjetosDAO
         $select->from('objetos');
         $select->join(
             'tipo_objeto', 'tipo_objeto.tipo_objeto_id = objetos.objetos_tipo', array(
-            'tipo_objeto_nombre',
+            'tipo_objeto_nombre', 'tipo_objeto_icono'
             ),
             'left'
         );        
@@ -44,7 +44,7 @@ class ObjetosDAO
         ));
         $select->join(
             'tipo_objeto', 'tipo_objeto.tipo_objeto_id = objetos.objetos_tipo', array(
-            'tipo_objeto_nombre',
+            'tipo_objeto_nombre', 'tipo_objeto_icono'
             ),
             'left'
         );        

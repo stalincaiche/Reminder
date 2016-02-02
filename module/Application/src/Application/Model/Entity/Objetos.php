@@ -10,6 +10,7 @@ class Objetos
     private $objetos_tipo;
 
     private $tipo_objeto_nombre;
+    private $tipo_objeto_icono; 
     
     public function getObjetosActividadId()
     {
@@ -71,6 +72,18 @@ class Objetos
         return $this;
     }
 
+    public function getTipoObjetoIcono()
+    {
+        return $this->tipo_objeto_icono;
+    }
+
+    public function setTipoObjetoIcono($tipo_objeto_icono)
+    {
+        $this->tipo_objeto_icono = $tipo_objeto_icono;
+
+        return $this;
+    }
+
     public function exchangeArray($data)
     {
         $this->objetos_actividad_id = (isset($data['objetos_actividad_id'])) ? $data['objetos_actividad_id'] : null;
@@ -78,6 +91,7 @@ class Objetos
         $this->objetos_nombre = (isset($data['objetos_nombre'])) ? $data['objetos_nombre'] : null;
         $this->objetos_tipo = (isset($data['objetos_tipo'])) ? $data['objetos_tipo'] : null;
         $this->tipo_objeto_nombre = (isset($data['tipo_objeto_nombre'])) ? $data['tipo_objeto_nombre'] : null;
+        $this->tipo_objeto_icono = (isset($data['tipo_objeto_icono'])) ? $data['tipo_objeto_icono'] : null;
     }
 
     public function getArrayCopy()

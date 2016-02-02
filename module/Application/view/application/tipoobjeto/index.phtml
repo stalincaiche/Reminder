@@ -12,6 +12,7 @@
         <tr>
             <th>ID</th>
             <th>Nombre</th>     
+            <th>Icono</th>     
             <th>Estado</th>     
             <th>&nbsp;</th>
         </tr>    
@@ -21,6 +22,12 @@
         <tr>
             <td><?php echo $this->escapeHtml($tipo->getTipoObjetoId());?></td>
             <td><?php echo $this->escapeHtml($tipo->getTipoObjetoNombre());?></td>     
+            <td>
+                <?php if($tipo->getTipoObjetoIcono() != ""){?>
+                <img width="16px" src="<?php echo $this->basePath('img/tipo_objeto/'.$this->escapeHtml($tipo->getTipoObjetoIcono())) ?>" alt="Zend Framework 2"/>
+                <?php }?>
+                <?php echo $this->escapeHtml($tipo->getTipoObjetoIcono());?>
+            </td>     
             <td><?php if($tipo->getTipoObjetoEstado() == "A"){echo"Activo";}else{echo"Inactivo";}?></td>
             <td>
                 <button title="Editar Tipo de Objeto" type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/tipoobjeto/editar/<?php echo $tipo->getTipoObjetoId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-edit"></i></button>
