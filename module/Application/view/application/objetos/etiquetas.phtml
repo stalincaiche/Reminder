@@ -1,61 +1,30 @@
-<h3>Datos del Objetos</h3>
+<?php if ($this->title){$this->headTitle()->append($this->title);} ?>
+<h3><span class="zf-green">Datos del Objetos</span></h3>
+<br>
 <?php $objeto = $this->objeto;?>
-<div class="row">
-    <table class="table">
-    	<tr>
-    		<th>Actividad</th>
-    		<th>ID</th>
-			<th>Nombre</th>
-			<th>Tipo</th>
-    	</tr>
-    	<tr>
-    		<td>
-                <a href="<?php echo $this->basePath() ?>/application/objetos/index/<?php echo $objeto->getObjetosActividadId() ?>" class="btn btn-lg" role="button" >
-                    <?php echo $this->escapeHtml($objeto->getObjetosActividadId());?>
-                </a>
-            </td>
-			<td><?php echo $this->escapeHtml($objeto->getObjetosId());?></td>
-			<td><?php echo $this->escapeHtml($objeto->getObjetosNombre());?></td>
-			<td>
-			<?php
-			    switch ($objeto->getObjetosTipo()) {                    
-			        case 'T':
-			            echo 'Transacción';
-			            break;
-
-			        case 'WP':
-			            echo 'Web Panel';
-			            break;
-
-			        case 'PR':
-			            echo 'Procedimiento';
-			            break;
-
-			        case 'ATR':
-			            echo 'Atributo';
-			            break;
-
-			        case 'TBL':
-			            echo 'Tabla';
-			            break;
-			        
-			        default:
-			            echo $objeto->getObjetosTipo();
-			            break;
-			    }
-			?>
-			</td>
-		</tr>
-    </table>
-</div>
-
+<table class="table">
+	<tr>
+		<th>Actividad</th>
+		<th>ID</th>
+		<th>Nombre</th>
+		<th>Tipo</th>
+	</tr>
+	<tr>
+		<td>
+            <a href="<?php echo $this->basePath() ?>/application/objetos/index/<?php echo $objeto->getObjetosActividadId() ?>" class="btn btn-lg" role="button" >
+                <?php echo $this->escapeHtml($objeto->getObjetosActividadId());?>
+            </a>
+        </td>
+		<td><?php echo $this->escapeHtml($objeto->getObjetosId());?></td>
+		<td><?php echo $this->escapeHtml($objeto->getObjetosNombre());?></td>
+		<td><?php echo $this->escapeHtml($objeto->getTipoObjetoNombre());?></td>
+	</tr>
+</table>
+<h3><span class="zf-green">Nueva Etiqueta</span></h3>
 <div class="row">
     <div class="col-md-12 ">
         <div class="panel-body">
-            <div class="row clearfix">
-                <div class="col-sm-12">
-                    <h3>Nueva Etiqueta</h3>
-                </div>                
+            <div class="row clearfix">                                
                     <?php $form= $this->form; $form->prepare();?>
                     <?php echo $this->form()->openTag($form); ?>
                 <div class="col-sm-3">
@@ -80,7 +49,7 @@
                         <label >
                             &nbsp;
                         </label>
-                        <?php echo $this->formSubmit($form->get('guardar'));?>
+                        <?php echo $this->formElement($form->get('guardar'));?>
                     </div>
                 </div>
                 
@@ -89,27 +58,31 @@
         </div> 
     </div> 
 </div>
-<h3>Etiquetas</h3>
-<div class="row">
-    <table class="table">
+<h3><span class="zf-green">Etiquetas</span></h3>
+<br>
+
+<table class="table table-hover demo-table-search" id="tablaEtiquetas">
+    <thead>
     	<tr>
         	<th>ID</th>
          	<th>Nombre</th>
          	<th></th>
-     	</tr>
+     	</tr>            
+    </thead>
+    <tbody>
      	<?php foreach ($this->etiquetas as $key => $etiqueta) : ?>
      	<tr>
        		<td><?php echo $this->escapeHtml($etiqueta->getEtiquetasId());?></td>
          	<td><?php echo $this->escapeHtml($etiqueta->getEtiquetasNombre());?></td>
          	<td>
-				<button type="button" class="btn btn-warning" onclick="window.location='<?php echo $this->basePath() ?>/application/etiquetas/desvincular/<?php echo $etiqueta->getObjetosEtiquetasId() ?>/<?php echo $etiqueta->getObjetosId() ?>';event.stopPropagation();return false;">
+				<button title="Desvincular Etiqueta" type="button" class="btn btn-warning" onclick="window.location='<?php echo $this->basePath() ?>/application/etiquetas/desvincular/<?php echo $etiqueta->getObjetosEtiquetasId() ?>/<?php echo $etiqueta->getObjetosId() ?>';event.stopPropagation();return false;">
 					<i class="glyphicon glyphicon-remove"> Desvincular</i>
 				</button>
-         		<button type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/etiquetas/eliminar/<?php echo $etiqueta->getEtiquetasId() ?>';event.stopPropagation();return false;">
+         		<button title="Eliminar Etiqueta" type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/etiquetas/eliminar/<?php echo $etiqueta->getEtiquetasId() ?>/<?php echo $objeto->getObjetosId();?>';event.stopPropagation();return false;">
 					<i class="glyphicon glyphicon-trash"> Eliminar Etiqueta</i>
 				</button>
          	</td>
      	</tr>
-     	<?php endforeach; ?>
-    </table>
-</div>
+     	<?php endforeach; ?>            
+    </tbody>
+</table>

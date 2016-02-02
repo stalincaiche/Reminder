@@ -1,25 +1,32 @@
-<h1>Administrar Etiquetas</h1>
-
+<?php if ($this->title){$this->headTitle()->append($this->title);} ?>
+<h1>
+    <span class="zf-green"><?php echo $this->title; ?></span>
+</h1>
+<br>
 <p>
-    <a class="btn btn-success" href="<?php echo $this->url('etiquetas', array('controller' => 'etiquetas', 'action'=>'crear'));?>">Nueva Etiqueta</a>
+    <a class="btn btn-primary" href="<?php echo $this->url('etiquetas', array('controller' => 'etiquetas', 'action'=>'crear'));?>"><i class="glyphicon glyphicon-plus"></i> Nueva Etiqueta</a>
 </p>
-
-<table class="table">
- <tr>
-     <th>ID</th>
-     <th>Nombre</th>
-     <th>Número de Asosiaciones</th>
-     <th>&nbsp;</th>
- </tr>
- <?php foreach ($this->etiquetas as $key => $etiqueta) : ?>
- <tr>
-     <td><?php echo $this->escapeHtml($etiqueta->getEtiquetasId());?></td>
-     <td><?php echo $this->escapeHtml($etiqueta->getEtiquetasNombre());?></td>
-     <td><?php echo $this->escapeHtml($etiqueta->getNum());?></td>
-     <td>        
-        <button type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/etiquetas/update/<?php echo $etiqueta->getEtiquetasId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-edit"></i></button>
-        <button type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/etiquetas/eliminaradmin/<?php echo $etiqueta->getEtiquetasId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-trash"></i></button>
-     </td>
- </tr>
- <?php endforeach; ?>
- </table>
+<br>
+<table class="table table-hover demo-table-search" id="tablaEtiquetas">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Número de Asosiaciones</th>
+            <th>&nbsp;</th>
+        </tr>       
+    </thead>
+    <tbody>
+        <?php foreach ($this->etiquetas as $key => $etiqueta) : ?>
+        <tr>
+            <td><?php echo $this->escapeHtml($etiqueta->getEtiquetasId());?></td>
+            <td><?php echo $this->escapeHtml($etiqueta->getEtiquetasNombre());?></td>
+            <td><?php echo $this->escapeHtml($etiqueta->getNum());?></td>
+            <td>        
+                <button title="Editar" type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/etiquetas/update/<?php echo $etiqueta->getEtiquetasId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-edit"></i></button>
+                <button title="Eliminar" type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/etiquetas/eliminaradmin/<?php echo $etiqueta->getEtiquetasId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-trash"></i></button>
+            </td>
+        </tr>
+        <?php endforeach; ?>        
+    </tbody>
+</table>

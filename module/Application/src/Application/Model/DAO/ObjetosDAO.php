@@ -67,16 +67,20 @@ class ObjetosDAO
     public function obtenerPorId($id)
     {
         $id = (int)$id;
-        $rowset = $this->tableGateway->select(
-            array(
-                'objetos_id' => $id
-            )
+        $sql = new Sql($this->tableGateway->adapter);
+        $select = $sql->select();
+        $select->from('objetos');
+        $select->where(array(
+            'objetos.objetos_id' => $id,
+        ));        
+        $select->join(
+            'tipo_objeto', 'tipo_objeto.tipo_objeto_id = objetos.objetos_tipo', array(
+            'tipo_objeto_nombre',
+            ),
+            'left'
         );
-        $row = $rowset->current();
-        if (!$row) {
-            throw new \Exception("No se pudo encontrar el ID: $id");
-        }
-        return $row;
+        $resultSet = $this->tableGateway->selectWith($select);
+        return $resultSet->current();
     }
 
     public function guardar(Objetos $objeto)

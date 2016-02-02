@@ -1,23 +1,28 @@
-<h1>Administrar Objetos</h1>
-
-<table class="table">
-    <tr>
-        <th>Actividad</th>
-        <th>ID</th>
-        <th>Nombre</th>     
-        <th>Tipo</th>     
-        <th>&nbsp;</th>
-    </tr>
-    <?php foreach ($this->objetos as $key => $objeto) : ?>
-    <tr>
-        <td><?php echo $this->escapeHtml($objeto->getObjetosActividadId());?></td>
-        <td><?php echo $this->escapeHtml($objeto->getObjetosId());?></td>
-        <td><?php echo $this->escapeHtml($objeto->getObjetosNombre());?></td>
-        <td><?php echo $this->escapeHtml($objeto->getTipoObjetoNombre());?></td>
-        <td>        
-            <button type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/update/<?php echo $objeto->getObjetosId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-edit"></i></button>
-            <button type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/delete/<?php echo $objeto->getObjetosId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-trash"></i></button>
-        </td>
-    </tr>
-    <?php endforeach; ?>
+<?php if ($this->title){$this->headTitle()->append($this->title);} ?>
+<h1><span class="zf-green"><?php echo $this->title;?></span></h1>
+<br>
+<table class="table table-hover demo-table-search" id="tablaObjetos">
+    <thead>
+        <tr>
+            <th>Actividad</th>
+            <th>ID</th>
+            <th>Nombre</th>     
+            <th>Tipo</th>     
+            <th>&nbsp;</th>
+        </tr>    
+    </thead>
+    <tbody>
+        <?php foreach ($this->objetos as $key => $objeto) : ?>
+        <tr>
+            <td><?php echo $this->escapeHtml($objeto->getObjetosActividadId());?></td>
+            <td><?php echo $this->escapeHtml($objeto->getObjetosId());?></td>
+            <td><?php echo $this->escapeHtml($objeto->getObjetosNombre());?></td>
+            <td><?php echo $this->escapeHtml($objeto->getTipoObjetoNombre());?></td>
+            <td>        
+                <button title="Editar" type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/update/<?php echo $objeto->getObjetosId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-edit"></i></button>
+                <button title="Eliminar" type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/delete/<?php echo $objeto->getObjetosId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-trash"></i></button>
+            </td>
+        </tr>
+        <?php endforeach; ?>        
+    </tbody>
  </table>

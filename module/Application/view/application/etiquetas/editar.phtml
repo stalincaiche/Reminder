@@ -1,11 +1,9 @@
+<?php if ($this->title){$this->headTitle()->append($this->title);} ?>
+<h1>
+    <span class="zf-green"><?php echo $this->title; ?></span>
+</h1>
 <?php
-	$title = 'Editar Etiqueta';
- 	$this->headTitle($title);
- 	$form= $this->form;
-?>
-
-<h1><?php echo $this->escapeHtml($title); ?></h1>
-<?php
+ $form= $this->form;
 $form->prepare();
 ?>
 <div class="row">
@@ -38,8 +36,8 @@ $form->prepare();
 						        echo $this->formElementErrors($etiquetas_nombre);
 						    ?>
 					  	</div>					  
-					  <?php echo $this->formSubmit($form->get('guardar'));?>
-						<button type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/etiquetas/eliminar/<?php echo $this->id ?>';event.stopPropagation();return false;">
+					  <?php echo $this->formElement($form->get('guardar'));?>
+						<button type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/etiquetas/eliminar2/<?php echo $this->id ?>';event.stopPropagation();return false;">
 							<i class="glyphicon glyphicon-trash"> Eliminar</i>
 						</button>
 					<?php echo $this->form()->closeTag();  ?>

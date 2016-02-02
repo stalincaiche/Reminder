@@ -1,13 +1,16 @@
-<h1>Búsqueda de Etiquetas</h1>
-<h3>Listado de resultados</h3>
-<div class="row">
-    <table class="table">
-        <tr>
-            <th>ID</th>            
-            <th>Nombre</th>
-            <th></th>
-        </tr>
-    <?php foreach ($this->etiquetas as $key => $etiqueta) : ?>
+<?php if ($this->title){$this->headTitle()->append($this->title);} ?>
+<h1><span class="zf-green"><?php echo $this->escapeHtml($this->title); ?></span></h1>
+<br>
+<table class="table table-hover demo-table-search" id="tablaEtiquetas">
+    <thead>
+            <tr>
+                <th>ID</th>            
+                <th>Nombre</th>
+                <th></th>
+            </tr>        
+    </thead>
+    <tbody>
+        <?php foreach ($this->etiquetas as $key => $etiqueta) : ?>
         <tr>
             <td>
                 <?php echo $this->escapeHtml($etiqueta->getEtiquetasId());?>
@@ -19,6 +22,6 @@
                 <button type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/etiquetas/objetos/<?php echo $etiqueta->getEtiquetasId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-search"> Ver Objetos Relacionados</i></button>
             </td>
         </tr>
-     <?php endforeach; ?>
-    </table>
-</div>
+         <?php endforeach; ?>        
+    </tbody>
+</table>
