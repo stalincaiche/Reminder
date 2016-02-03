@@ -54,7 +54,7 @@ class UsuariosDAO
 
     public function guardar(Usuarios $usuario)
     {
-        $id = (int)$usuario->getTipoObjetoId();
+        $id = (int)$usuario->getUsuariosId();
 
         if ($id == "") {
 

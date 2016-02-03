@@ -1,0 +1,32 @@
+<?php if ($this->title){$this->headTitle()->append($this->title);} ?>
+<h1>
+    <span class="zf-green"><?php echo $this->title; ?></span>
+</h1>
+<br>
+<p>
+    <a class="btn btn-primary" href="<?php echo $this->url('areas', array('controller' => 'areas', 'action'=>'crear'));?>"><i class="glyphicon glyphicon-plus"></i> Nueva Área</a>
+</p>
+<br>
+<table class="table table-hover demo-table-search" id="tablaAreas">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>&nbsp;</th>
+        </tr>    
+    </thead>
+    <tbody>
+        <?php foreach ($this->areas as $key => $area) : ?>
+        <tr>
+            <td><?php echo $this->escapeHtml($area->getAreasId());?></td>
+            <td><?php echo $this->escapeHtml($area->getAreasNombre());?></td>
+            <td><?php if($area->getAreasEstado() == "A"){echo"Activo";}else{echo"Inactivo";}?></td>
+            <td>
+                <button title="Editar Área" type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/areas/editar/<?php echo $area->getAreasId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-edit"></i></button>
+                <button title="Eliminar Área" type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/areas/eliminar/<?php echo $area->getAreasId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-trash"></i></button>
+            </td>
+        </tr>
+        <?php endforeach; ?>        
+    </tbody>
+</table>

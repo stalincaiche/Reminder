@@ -1,0 +1,58 @@
+<?php if ($this->title){$this->headTitle()->append($this->title);} ?>
+<h1>
+    <span class="zf-green"><?php echo $this->title; ?></span>
+</h1>
+<?php
+ $form= $this->form;
+$form->prepare();
+?>
+<div class="row">
+    <div class="col-md-6 ">        
+        <div class="panel-body">
+            <div class="row clearfix">
+                <div class="col-sm-12">
+					<?php echo $this->form()->openTag($form); ?>
+						<div class="form-group">
+					    	<label >
+						    	<?php
+						            $areas_id = $form->get('areas_id');
+						            echo $areas_id->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formInput($areas_id);
+						        echo $this->formElementErrors($areas_id);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
+						            $areas_nombre = $form->get('areas_nombre');
+						            echo $areas_nombre->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formInput($areas_nombre);
+						        echo $this->formElementErrors($areas_nombre);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
+						            $areas_estado = $form->get('areas_estado');
+						            echo $areas_estado->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formElement($areas_estado);
+						        echo $this->formElementErrors($areas_estado);
+						    ?>
+					  	</div>
+					  
+					  <?php echo $this->formElement($form->get('guardar'));?>
+					<?php echo $this->form()->closeTag();  ?>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>

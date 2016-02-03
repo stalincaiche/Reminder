@@ -54,7 +54,7 @@ class AreasDAO
 
     public function guardar(Areas $area)
     {
-        $id = (int)$area->getTipoObjetoId();
+        $id = (int)$area->getAreasId();
 
         if ($id == "") {
 

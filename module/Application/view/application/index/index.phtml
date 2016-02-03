@@ -1,7 +1,7 @@
 <div class="jumbotron">
-    <h1>
+    <h2>
         <?php echo sprintf($this->translate('Bienvenido a %sReminder%s'), '<span class="zf-green">', '</span>') ?>
-    </h1>
+    </h2>
     <p>
         <?php echo sprintf($this->translate('%sReminder%s. Te ayuda a recordar lo objetos de GeneXus modificados durante la resolución de tus actividades. Esta aplicación está creada en PHP, MySQL sobre Zend Framework 2.'), '<a href="https://github.com/Escipion25/Reminder" target="_blank">', '</a>') ?>
     </p>    
@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Mis Actividades') ?></h3>
+                <h3 class="panel-title"><?php echo $this->translate('Actividades') ?></h3>
             </div>
             <div class="panel-body">
                 <p>
@@ -43,5 +43,23 @@
                 </p>
             </div>
         </div>
-    </div>    
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Colaborar') ?></h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    <div class="col-md-8">
+                    <?php echo sprintf($this->translate('Reminder es una aplicaión de código abierto, puedes colaborar haciendo fork al repositorio de %sGitHub%s.'), '<a href="https://github.com/Escipion25/Reminder" target="_blank">', '</a>') ?>
+                    </div>
+                    <a href="https://github.com/Escipion25/Reminder" target="_blank">
+                        <img align="right" src="<?php echo $this->basePath('img/logo/original.png') ?>"  height="100" width="100">
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
