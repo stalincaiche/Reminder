@@ -62,6 +62,83 @@ class ActividadesForm extends Form
             )
         );
 
+        $actividades_responsable = new Element\Select('actividades_responsable');
+        $actividades_responsable->setLabel('Responsable');
+        $actividades_responsable->setEmptyOption('Elige un Responsable..');
+
+        $actividades_responsable->setOptions(
+            array(
+                'disable_inarray_validator' => true
+            )
+        );
+        $actividades_responsable->setAttributes(
+            array(
+                'id' => 'actividades_responsable',
+                'class' => "form-control",
+                //'data-rule-required' => "true",
+                //'data-msg-required' => "Debe seleccionar el Tipo",
+            )
+        );
+
+        $actividades_area = new Element\Select('actividades_area');
+        $actividades_area->setLabel('Área');
+        $actividades_area->setEmptyOption('Elige una Área..');
+
+        $actividades_area->setOptions(
+            array(
+                'disable_inarray_validator' => true
+            )
+        );
+        $actividades_area->setAttributes(
+            array(
+                'id' => 'actividades_area',
+                'class' => "form-control",
+                //'data-rule-required' => "true",
+                //'data-msg-required' => "Debe seleccionar el Tipo",
+            )
+        );
+
+        $actividades_reporta = new Element('actividades_reporta');
+        $actividades_reporta->setLabel('Reportada Por');
+        $actividades_reporta->setAttributes(
+            array(
+                'type' => 'text',
+                'placeholder' => 'Persona que reporta',
+                'id' => 'actividades_reporta',
+                'class' => 'form-control',
+                //'data-rule-required' => "true",
+                //'data-msg-required' => "Debe ingresar el nombre del usuario",
+                //'data-rule-minlength' => "4",
+                //'data-msg-minlength' => "El nombre del Usuario debe tener mínimo 4 caracteres",
+                //'data-rule-maxlength' => "50",
+                //'data-msg-maxlength' => "El nombre del Usuario debe tener máximo 50 caracteres",
+            )
+        );
+
+        $actividades_fecha = new Element('actividades_fecha');
+        $actividades_fecha->setLabel('Fecha de Inicio');
+        $actividades_fecha->setAttributes(
+            array(
+                'placeholder' => 'Fecha de Inicio',
+                'id' => 'actividades_fecha',
+                'class' => 'form-control',
+                //'data-rule-required' => "true",
+                //'data-msg-required' => "Debe ingresar una fecha de Inicio",
+            )
+        );
+
+        $actividades_fecha_fin = new Element('actividades_fecha_fin');
+        $actividades_fecha_fin->setLabel('Fecha de Finalización');
+        $actividades_fecha_fin->setAttributes(
+            array(
+                'placeholder' => 'Fecha de Finalización',
+                'id' => 'actividades_fecha_fin',
+                'class' => 'form-control',
+                //'data-rule-required' => "true",
+                //'data-msg-required' => "Debe ingresar una fecha de Finalización",
+            )
+        );
+
         $guardar = new Element\Button('guardar');
         $guardar->setAttributes(
             array(
@@ -79,7 +156,14 @@ class ActividadesForm extends Form
 
         $this->add($actividades_id);
         $this->add($actividades_nombre);
+        $this->add($actividades_fecha);
         $this->add($actividades_estado);
+        $this->add($actividades_responsable);
+        $this->add($actividades_area);
+        $this->add($actividades_reporta);
+        $this->add($actividades_fecha_fin);
+
+        
         $this->add($guardar);    
     }
 }

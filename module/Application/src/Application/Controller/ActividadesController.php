@@ -11,7 +11,9 @@ use Application\Form\Actividades\ActividadesFormValidator;
 class ActividadesController extends AbstractActionController
 {
 
-	private $actividadesBO;
+    private $actividadesBO;
+    private $usuariosBO;
+	private $areasBO;
 
 	public function getActividadesBO()
     {
@@ -20,6 +22,25 @@ class ActividadesController extends AbstractActionController
             $this->actividadesBO = $sm->get('Application\Model\ActividadesBO');
         }
         return $this->actividadesBO;
+    }
+
+    public function getUsuariosBO()
+    {
+        if (!$this->usuariosBO) {
+            $sm = $this->getServiceLocator();
+            $this->usuariosBO = $sm->get('Application\Model\UsuariosBO');
+        }
+        return $this->usuariosBO;
+    }
+
+    
+    public function getAreasBO()
+    {
+        if (!$this->areasBO) {
+            $sm = $this->getServiceLocator();
+            $this->areasBO = $sm->get('Application\Model\AreasBO');
+        }
+        return $this->areasBO;
     }
 
     public function indexAction()
@@ -38,6 +59,11 @@ class ActividadesController extends AbstractActionController
 
     public function editarAction()
     {
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+        $script = $renderer->render('application/actividades/js/crear');
+        $renderer->headScript()->appendScript($script, 'text/javascript');
+
         $id = (int)$this->params()->fromRoute('id', 0);
 
         if (!$id) {
@@ -46,6 +72,12 @@ class ActividadesController extends AbstractActionController
 
         $form = new ActividadesForm("actividadesform");
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/actividades/guardar');
+        
+        $areas = $this->getAreasBO()->obtenerCombo();        
+        $form->get('actividades_area')->setValueOptions($areas);
+
+        $usuarios = $this->getUsuariosBO()->obtenerCombo();        
+        $form->get('actividades_responsable')->setValueOptions($usuarios);
 
         $actividad = $this->getActividadesBO()->obtenerPorId($id);
 
@@ -83,6 +115,11 @@ class ActividadesController extends AbstractActionController
 
     public function editar2Action()
     {
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+        $script = $renderer->render('application/actividades/js/crear');
+        $renderer->headScript()->appendScript($script, 'text/javascript');
+
         $id = (int)$this->params()->fromRoute('id', 0);
 
         if (!$id) {
@@ -91,6 +128,12 @@ class ActividadesController extends AbstractActionController
 
         $form = new ActividadesForm("actividadesform");
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/actividades/guardar2');
+
+        $areas = $this->getAreasBO()->obtenerCombo();        
+        $form->get('actividades_area')->setValueOptions($areas);
+
+        $usuarios = $this->getUsuariosBO()->obtenerCombo();        
+        $form->get('actividades_responsable')->setValueOptions($usuarios);
 
         $actividad = $this->getActividadesBO()->obtenerPorId($id);
 
@@ -128,6 +171,11 @@ class ActividadesController extends AbstractActionController
 
     public function crearAction()
     {
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+        $script = $renderer->render('application/actividades/js/crear');
+        $renderer->headScript()->appendScript($script, 'text/javascript');
+
         $form = new ActividadesForm();
         $form->get('guardar')->setOptions(
             array(
@@ -143,6 +191,12 @@ class ActividadesController extends AbstractActionController
         );
         $form->get('actividades_estado')->setValueOptions($estados);
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/actividades/guardar');
+        
+        $usuarios = $this->getUsuariosBO()->obtenerCombo();        
+        $form->get('actividades_responsable')->setValueOptions($usuarios);
+
+        $areas = $this->getAreasBO()->obtenerCombo();        
+        $form->get('actividades_area')->setValueOptions($areas);
 
         $datos = array(
             'form' => $form,
@@ -154,6 +208,11 @@ class ActividadesController extends AbstractActionController
 
     public function crear2Action()
     {
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+        $script = $renderer->render('application/actividades/js/crear');
+        $renderer->headScript()->appendScript($script, 'text/javascript');
+
         $form = new ActividadesForm();
         $form->get('guardar')->setOptions(
             array(
@@ -169,6 +228,12 @@ class ActividadesController extends AbstractActionController
         );
         $form->get('actividades_estado')->setValueOptions($estados);
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/actividades/guardar2');
+        
+        $areas = $this->getAreasBO()->obtenerCombo();        
+        $form->get('actividades_area')->setValueOptions($areas);
+        
+        $usuarios = $this->getUsuariosBO()->obtenerCombo();        
+        $form->get('actividades_responsable')->setValueOptions($usuarios);
 
         $datos = array(
             'form' => $form,
@@ -187,6 +252,11 @@ class ActividadesController extends AbstractActionController
                 array('controller' => 'actividades')
             );
         }
+
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+        $script = $renderer->render('application/actividades/js/crear');
+        $renderer->headScript()->appendScript($script, 'text/javascript');
 
         $form = new ActividadesForm("actividadesform");
         $form->setInputFilter(new ActividadesFormValidator());
@@ -210,6 +280,12 @@ class ActividadesController extends AbstractActionController
                     )
                 )
             );
+
+            $areas = $this->getAreasBO()->obtenerCombo();        
+            $form->get('actividades_area')->setValueOptions($areas);
+
+            $usuarios = $this->getUsuariosBO()->obtenerCombo();        
+            $form->get('actividades_responsable')->setValueOptions($usuarios);
 
             $modelView = new ViewModel(
                 array(
@@ -243,6 +319,11 @@ class ActividadesController extends AbstractActionController
             );
         }
 
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+        $script = $renderer->render('application/actividades/js/crear');
+        $renderer->headScript()->appendScript($script, 'text/javascript');
+
         $form = new ActividadesForm("actividadesform");
         $form->setInputFilter(new ActividadesFormValidator());
         // Obtenemos los datos desde el Formulario con POST data:
@@ -251,6 +332,12 @@ class ActividadesController extends AbstractActionController
         $form->setData($data);
 
         if (!$form->isValid()) {            
+
+            $areas = $this->getAreasBO()->obtenerCombo();        
+            $form->get('actividades_area')->setValueOptions($areas);
+
+            $usuarios = $this->getUsuariosBO()->obtenerCombo();        
+            $form->get('actividades_responsable')->setValueOptions($usuarios);
 
             $estados = array(
                 'A' => 'Activo',

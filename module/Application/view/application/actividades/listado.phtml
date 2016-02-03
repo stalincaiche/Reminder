@@ -11,8 +11,10 @@
 <thead>
     <tr>
         <th>ID</th>
+        <th>Responsable</th>
         <th>Nombre</th>
-        <th>Fecha</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha Fin</th>
         <th>Estado</th>
         <th>&nbsp;</th>
     </tr>    
@@ -21,8 +23,10 @@
     <?php foreach ($this->actividades as $key => $actividad) : ?>
     <tr>
         <td><?php echo $this->escapeHtml($actividad->getActividadesId());?></td>
+        <td><?php echo $this->escapeHtml($actividad->getUsuariosUsername());?></td>
         <td><?php echo $this->escapeHtml($actividad->getActividadesNombre());?></td>
         <td><?php echo $this->escapeHtml($actividad->getActividadesFecha());?></td>
+        <td><?php echo $this->escapeHtml($actividad->getActividadesFechaFin());?></td>
         <td><?php if($actividad->getActividadesEstado() == "A"){echo"Activo";}else{echo"Finalizado";}?></td>
         <td>
             <button title="Listado de Objetos Asociados" type="button" class="btn btn-info" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/index/<?php echo $actividad->getActividadesId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-list-alt"></i></button>

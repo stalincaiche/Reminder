@@ -11,9 +11,10 @@
     <thead>        
         <tr>
             <th>ID</th>
+            <th>Responsable</th>
             <th>Nombre</th>
-            <th>Fecha</th>
-            <th>Estado</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Fin</th>
             <th>&nbsp;</th>
         </tr>
     </thead>
@@ -21,15 +22,19 @@
         <?php foreach ($this->actividades as $key => $actividad) : ?>
         <tr>
             <td><?php echo $this->escapeHtml($actividad->getActividadesId());?></td>
+            <td><?php echo $this->escapeHtml($actividad->getUsuariosUsername());?></td>
             <td><?php echo $this->escapeHtml($actividad->getActividadesNombre());?></td>
             <td><?php echo $this->escapeHtml($actividad->getActividadesFecha());?></td>
-            <td>
-                <?php if($actividad->getActividadesEstado() == "A"){echo"Activo";}else{echo"Finalizado";}?>
-            </td>
+            <td><?php echo $this->escapeHtml($actividad->getActividadesFechaFin());?></td>
+            
             <td>
                 <button title="Objetos de la actividad" type="button" class="btn btn-info" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/index/<?php echo $actividad->getActividadesId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-list-alt"></i></button>        
                 <button title="Objetos y sus Etiquetas" type="button" class="btn btn-warning" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/ver/<?php echo $actividad->getActividadesId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-eye-open"></i></button>        
-                <button title="Marcar como Finalizada" type="button" class="btn btn-success" onclick="window.location='<?php echo $this->basePath() ?>/application/actividades/finalizar/<?php echo $actividad->getActividadesId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-ok"></i></button>        
+                <?php if($actividad->getActividadesFechaFin() != ""){ ?>
+                    <button title="Marcar como Finalizada" type="button" class="btn btn-success" onclick="window.location='<?php echo $this->basePath() ?>/application/actividades/finalizar/<?php echo $actividad->getActividadesId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-ok"></i></button>
+                <?php } else{ ?>
+                    <button title="Se requeire la Fecha de Finalización para Finalizar la Actividad" type="button" class="btn btn-danger " onclick="javascript:alert('Se requeire la Fecha de Finalización para Finalizar la Actividad!');"><i class="glyphicon glyphicon-info-sign"></i></button>
+                <?php } ?>
                 <button title="Editar Actividad" type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/actividades/editar/<?php echo $actividad->getActividadesId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-edit"></i></button>
                 <button title="Eliminar Actividad" type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/actividades/eliminar/<?php echo $actividad->getActividadesId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-trash"></i></button>
             </td>

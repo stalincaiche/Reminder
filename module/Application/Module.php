@@ -28,6 +28,12 @@ use Application\Model\Entity\ObjetosEtiquetas;
 use Application\Model\BO\TipoObjetosBO;
 use Application\Model\Entity\TipoObjetos;
 
+use Application\Model\BO\UsuariosBO;
+use Application\Model\Entity\Usuarios;
+
+use Application\Model\BO\AreasBO;
+use Application\Model\Entity\Areas;
+
 class Module
 {
     public function onBootstrap(MvcEvent $e)
@@ -116,6 +122,32 @@ class Module
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(New TipoObjetos());
                     return new TableGateway("tipo_objeto", $dbAdapter, NULL, $resultSetPrototype);
+                },
+                'Application\Model\UsuariosBO' => function ($sm)
+                {
+                    $tableGateway = $sm->get("UsuariosTableGateway");
+                    $usuariosBO = new UsuariosBO($tableGateway);
+                    return $usuariosBO;
+                },
+                'UsuariosTableGateway' => function ($sm)
+                {
+                    $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(New Usuarios());
+                    return new TableGateway("usuarios", $dbAdapter, NULL, $resultSetPrototype);
+                },
+                'Application\Model\AreasBO' => function ($sm)
+                {
+                    $tableGateway = $sm->get("AreasTableGateway");
+                    $areasBO = new AreasBO($tableGateway);
+                    return $areasBO;
+                },
+                'AreasTableGateway' => function ($sm)
+                {
+                    $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(New Areas());
+                    return new TableGateway("areas", $dbAdapter, NULL, $resultSetPrototype);
                 },
             ) ,
         );

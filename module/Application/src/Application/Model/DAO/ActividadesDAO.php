@@ -21,7 +21,16 @@ class ActividadesDAO
 
     public function obtenerTodos()
     {
-        $resultSet = $this->tableGateway->select();
+        $sql = new Sql($this->tableGateway->adapter);
+        $select = $sql->select();
+        $select->from('actividades');
+        $select->join(
+            'usuarios', 'usuarios.usuarios_id = actividades.actividades_responsable', array(
+            'usuarios_username', 'usuarios_nombres'
+            ),
+            'left'
+        );
+        $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }
 
@@ -32,7 +41,13 @@ class ActividadesDAO
         $select->from('actividades');
         $select->where(array(
             'actividades.actividades_estado' => 'A',
-        ));        
+        ));
+        $select->join(
+            'usuarios', 'usuarios.usuarios_id = actividades.actividades_responsable', array(
+            'usuarios_username', 'usuarios_nombres'
+            ),
+            'left'
+        );
         $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }
@@ -56,12 +71,28 @@ class ActividadesDAO
     {
         $id = (int)$actividad->getActividadesId();
 
+        if($actividad->getActividadesFecha()){
+            $fecha = $actividad->getActividadesFecha();    
+        }else{
+            $fecha = null;
+        }
+
+        if($actividad->getActividadesFechaFin()){
+            $fecha_fin = $actividad->getActividadesFechaFin();    
+        }else{
+            $fecha_fin = null;
+        }
+
         if ($id == "") {
 
             $data = array(                
                 'actividades_nombre' => $actividad->getActividadesNombre(),
-                'actividades_fecha' => date("Y-m-d H:i:s"),
-                'actividades_estado' => $actividad->getActividadesEstado()           
+                'actividades_fecha' => $fecha,
+                'actividades_estado' => $actividad->getActividadesEstado(),
+                'actividades_responsable' => $actividad->getActividadesResponsable(),
+                'actividades_area' =>  $actividad->getActividadesArea(),
+                'actividades_reporta' =>  $actividad->getActividadesReporta(),
+                'actividades_fecha_fin' =>  $fecha_fin,
             );
 
             $this->tableGateway->insert($data);
@@ -71,7 +102,12 @@ class ActividadesDAO
             if ($this->obtenerPorId($id)) {
                 $data = array(
                     'actividades_nombre' => $actividad->getActividadesNombre(),
-                    'actividades_estado' => $actividad->getActividadesEstado()
+                    'actividades_fecha' => $fecha,
+                    'actividades_estado' => $actividad->getActividadesEstado(),
+                    'actividades_responsable' => $actividad->getActividadesResponsable(),
+                    'actividades_area' =>  $actividad->getActividadesArea(),
+                    'actividades_reporta' =>  $actividad->getActividadesReporta(),
+                    'actividades_fecha_fin' =>  $fecha_fin,
                 );
 
                 $this->tableGateway->update($data, array('actividades_id' => $id));
