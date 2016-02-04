@@ -12,6 +12,9 @@ use PHPExcel_IOFactory;
 use IOException;
 use PHPExcel_Cell;
 use PHPExcel_Cell_DataType;
+use PHPExcel_Style_Alignment;
+use PHPExcel_Style_Border;
+use PHPExcel_Style_Fill;
 
 class ActividadesController extends AbstractActionController
 {
@@ -38,7 +41,7 @@ class ActividadesController extends AbstractActionController
         return $this->usuariosBO;
     }
 
-    
+
     public function getAreasBO()
     {
         if (!$this->areasBO) {
@@ -57,7 +60,7 @@ class ActividadesController extends AbstractActionController
 
         $datos = array(
             'title' =>  "Actividades",
-            'actividades' => $this->getActividadesBO()->obtenerActivas() ,            
+            'actividades' => $this->getActividadesBO()->obtenerActivas() ,
         );
         return new ViewModel($datos);
     }
@@ -77,11 +80,11 @@ class ActividadesController extends AbstractActionController
 
         $form = new ActividadesForm("actividadesform");
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/actividades/guardar');
-        
-        $areas = $this->getAreasBO()->obtenerCombo();        
+
+        $areas = $this->getAreasBO()->obtenerCombo();
         $form->get('actividades_area')->setValueOptions($areas);
 
-        $usuarios = $this->getUsuariosBO()->obtenerCombo();        
+        $usuarios = $this->getUsuariosBO()->obtenerCombo();
         $form->get('actividades_responsable')->setValueOptions($usuarios);
 
         $actividad = $this->getActividadesBO()->obtenerPorId($id);
@@ -106,7 +109,7 @@ class ActividadesController extends AbstractActionController
         );
         $form->get('actividades_estado')->setValueOptions($estados);
 
-        
+
         $modelView = new ViewModel(
             array(
                 'form' => $form,
@@ -134,10 +137,10 @@ class ActividadesController extends AbstractActionController
         $form = new ActividadesForm("actividadesform");
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/actividades/guardar2');
 
-        $areas = $this->getAreasBO()->obtenerCombo();        
+        $areas = $this->getAreasBO()->obtenerCombo();
         $form->get('actividades_area')->setValueOptions($areas);
 
-        $usuarios = $this->getUsuariosBO()->obtenerCombo();        
+        $usuarios = $this->getUsuariosBO()->obtenerCombo();
         $form->get('actividades_responsable')->setValueOptions($usuarios);
 
         $actividad = $this->getActividadesBO()->obtenerPorId($id);
@@ -162,7 +165,7 @@ class ActividadesController extends AbstractActionController
         );
         $form->get('actividades_estado')->setValueOptions($estados);
 
-        
+
         $modelView = new ViewModel(
             array(
                 'form' => $form,
@@ -196,11 +199,11 @@ class ActividadesController extends AbstractActionController
         );
         $form->get('actividades_estado')->setValueOptions($estados);
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/actividades/guardar');
-        
-        $usuarios = $this->getUsuariosBO()->obtenerCombo();        
+
+        $usuarios = $this->getUsuariosBO()->obtenerCombo();
         $form->get('actividades_responsable')->setValueOptions($usuarios);
 
-        $areas = $this->getAreasBO()->obtenerCombo();        
+        $areas = $this->getAreasBO()->obtenerCombo();
         $form->get('actividades_area')->setValueOptions($areas);
 
         $datos = array(
@@ -233,11 +236,11 @@ class ActividadesController extends AbstractActionController
         );
         $form->get('actividades_estado')->setValueOptions($estados);
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/actividades/guardar2');
-        
-        $areas = $this->getAreasBO()->obtenerCombo();        
+
+        $areas = $this->getAreasBO()->obtenerCombo();
         $form->get('actividades_area')->setValueOptions($areas);
-        
-        $usuarios = $this->getUsuariosBO()->obtenerCombo();        
+
+        $usuarios = $this->getUsuariosBO()->obtenerCombo();
         $form->get('actividades_responsable')->setValueOptions($usuarios);
 
         $datos = array(
@@ -286,10 +289,10 @@ class ActividadesController extends AbstractActionController
                 )
             );
 
-            $areas = $this->getAreasBO()->obtenerCombo();        
+            $areas = $this->getAreasBO()->obtenerCombo();
             $form->get('actividades_area')->setValueOptions($areas);
 
-            $usuarios = $this->getUsuariosBO()->obtenerCombo();        
+            $usuarios = $this->getUsuariosBO()->obtenerCombo();
             $form->get('actividades_responsable')->setValueOptions($usuarios);
 
             $modelView = new ViewModel(
@@ -319,7 +322,7 @@ class ActividadesController extends AbstractActionController
                 'actividades',
                 array(
                     'controller' => 'actividades',
-                    'action' => 'listado'                
+                    'action' => 'listado'
                 )
             );
         }
@@ -336,12 +339,12 @@ class ActividadesController extends AbstractActionController
 
         $form->setData($data);
 
-        if (!$form->isValid()) {            
+        if (!$form->isValid()) {
 
-            $areas = $this->getAreasBO()->obtenerCombo();        
+            $areas = $this->getAreasBO()->obtenerCombo();
             $form->get('actividades_area')->setValueOptions($areas);
 
-            $usuarios = $this->getUsuariosBO()->obtenerCombo();        
+            $usuarios = $this->getUsuariosBO()->obtenerCombo();
             $form->get('actividades_responsable')->setValueOptions($usuarios);
 
             $estados = array(
@@ -373,7 +376,7 @@ class ActividadesController extends AbstractActionController
             'actividades',
             array(
                 'controller' => 'actividades',
-                'action' => 'listado'                
+                'action' => 'listado'
             )
         );
     }
@@ -398,7 +401,7 @@ class ActividadesController extends AbstractActionController
                 'actividades',
                 array(
                     'controller' => 'actividades',
-                    'action' => 'listado'                
+                    'action' => 'listado'
                 )
             );
         }
@@ -409,7 +412,7 @@ class ActividadesController extends AbstractActionController
             'actividades',
             array(
                 'controller' => 'actividades',
-                'action' => 'listado'                
+                'action' => 'listado'
             )
         );
     }
@@ -491,7 +494,9 @@ class ActividadesController extends AbstractActionController
         //php composer.phar require phpoffice/phpexcel
         //'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
         $objPHPExcel = new \PHPExcel();
-        $i = 3;
+        $i           = 3;
+        $secuencial  = 1;
+        $fecha_fin   = date("d-m-Y");
         // Set properties
         $objPHPExcel->getProperties()->setCreator("ThinkPHP")
                 ->setLastModifiedBy("Stalin Caiche")
@@ -504,19 +509,69 @@ class ActividadesController extends AbstractActionController
 
         $datos = $this->getActividadesBO()->obtenerActivas();
 
+        #estilos
+        $styleArray = array(
+                            'font' => array(
+                                'bold' => true,
+                            ),
+                            'alignment' => array(
+                                'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_RIGHT,
+                            ),
+                            'borders' => array(
+                                'top' => array(
+                                    'style' => PHPExcel_Style_Border::BORDER_THIN,
+                                ),
+                            ),
+                            'fill' => array(
+                                'type' => PHPExcel_Style_Fill::FILL_GRADIENT_LINEAR,
+                                'rotation' => 90,
+                                'startcolor' => array(
+                                    'argb' => 'FFA0A0A0',
+                                ),
+                                'endcolor' => array(
+                                    'argb' => 'FFFFFFFF',
+                                ),
+                            ),
+                        );
+
+        $objPHPExcel->getActiveSheet()->getStyle('A2:G2')->applyFromArray($styleArray);
+
+        $objPHPExcel->getActiveSheet()->getColumnDimension("A")->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension("B")->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension("C")->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension("D")->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension("E")->setWidth(30);
+        $objPHPExcel->getActiveSheet()->getColumnDimension("F")->setAutoSize(true);
+        $objPHPExcel->getActiveSheet()->getColumnDimension("G")->setWidth(50);
+
+
         // cabecera
         $objPHPExcel->setActiveSheetIndex(0)
-                ->setCellValue('A2', 'ID')
-                ->setCellValue('B2', 'Actividad')
-                ->setCellValue('C2', 'Fecha');
+                ->setCellValue('A2', 'No.')
+                ->setCellValue('B2', 'COMPAÑIA')
+                ->setCellValue('C2', 'RESPONSABLE')
+                ->setCellValue('D2', 'AREA')
+                ->setCellValue('E2', 'REPORTADO POR')
+                ->setCellValue('F2', 'FECHA REPORTADA')
+                ->setCellValue('G2', 'DESCRIPCIÓN');
 
         foreach ($datos as $key => $actividad) {
+            if( $actividad->getActividadesFechaFin() != NULL OR $actividad->getActividadesFechaFin() != ''){
+                $periodo = $actividad->getActividadesFecha(). ' - '.$actividad->getActividadesFechaFin();
+            }else{
+                $periodo = $actividad->getActividadesFecha(). ' - '.$fecha_fin;
+            }
+
+
             $objPHPExcel->setActiveSheetIndex(0)
-                ->setCellValue('A'.$i, $actividad->getActividadesId())
-                ->setCellValue('B'.$i, $actividad->getActividadesNombre())
-                ->setCellValue('C'.$i, $actividad->getActividadesFecha());
+                ->setCellValue('A'.$i, $secuencial)
+                ->setCellValue('C'.$i, $actividad->getActividadesResponsable())
+                ->setCellValue('D'.$i, $actividad->getActividadesArea())
+                ->setCellValue('E'.$i, $actividad->getActividadesReporta())
+                ->setCellValue('F'.$i, $periodo);
 
             $i += 1;
+            $secuencial += 1;
         }
 
 
@@ -524,7 +579,7 @@ class ActividadesController extends AbstractActionController
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         // If you want to output e.g. a PDF file, simply do:
         // $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'PDF');
-        $nomFile  = 'Bitacora_CAICHE_'.date('yyyy-mm-dd').'.xlsx';
+        $nomFile  = 'Bitacora_CAICHE_'.date('Y-m-d').'.xlsx';
         $objWriter->save($nomFile);
 
         // $objPHPExcel = PHPExcel_IOFactory::load("C:\Users\Stalin Caiche\Documents\TRABAJO\MyExcel.xlsx");
@@ -541,7 +596,7 @@ class ActividadesController extends AbstractActionController
     public function generarexcelAction()
     {
         $objPHPExcel = new \PHPExcel();
-        $objPHPExcel = PHPExcel_IOFactory::load("MyExcel.xlsx"); 
+        $objPHPExcel = PHPExcel_IOFactory::load("MyExcel.xlsx");
 
         $modelView = new ViewModel(array());
         $modelView->setTemplate('application/actividades/bitacora');
