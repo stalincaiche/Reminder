@@ -120,6 +120,36 @@ return array(
                     ),
                 ),
             ),
+            'areas' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                    'route'    => '/application/areas[/:action][/:id]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',                        
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Areas',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'usuarios' => array(
+                 'type'    => 'segment',
+                 'options' => array(
+                    'route'    => '/application/usuarios[/:action][/:id]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',                        
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Usuarios',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -149,6 +179,8 @@ return array(
             'Application\Controller\Etiquetas' => Controller\EtiquetasController::class,
             'Application\Controller\Admin' => Controller\AdminController::class,
             'Application\Controller\Tipoobjeto' => Controller\TipoobjetoController::class,
+            'Application\Controller\Areas' => Controller\AreasController::class,
+            'Application\Controller\Usuarios' => Controller\UsuariosController::class,
         ),
     ),
     'view_manager' => array(

@@ -74,4 +74,40 @@
             </div>
         </div>
     </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Áreas') ?></h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    <?php echo $this->translate('Administra las Áreas disponibles en la Aplicación') ?>
+                </p>
+                <p>
+                    <a class="btn btn-success pull-right" href="<?php echo $this->url('areas', array('controller' => 'areas', 'action' => 'index'))?>" >
+                        <?php echo $this->translate('Administrar') ?> &raquo;
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Usuarios') ?></h3>
+            </div>
+            <div class="panel-body">
+                <p>
+                    <?php echo $this->translate('Administra los Usuarios de la Aplicación') ?>
+                </p>
+                <p>
+                    <a class="btn btn-success pull-right" href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action' => 'index'))?>" >
+                        <?php echo $this->translate('Administrar') ?> &raquo;
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>

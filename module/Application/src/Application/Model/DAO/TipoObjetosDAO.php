@@ -60,7 +60,8 @@ class TipoObjetosDAO
 
             $data = array(                
                 'tipo_objeto_nombre' => $actividad->getTipoObjetoNombre(),
-                'tipo_objeto_estado' => $actividad->getTipoObjetoEstado()           
+                'tipo_objeto_estado' => $actividad->getTipoObjetoEstado(),
+                'tipo_objeto_icono' => $actividad->getTipoObjetoIcono()
             );
 
             $this->tableGateway->insert($data);
@@ -70,7 +71,8 @@ class TipoObjetosDAO
             if ($this->obtenerPorId($id)) {
                 $data = array(
                     'tipo_objeto_nombre' => $actividad->getTipoObjetoNombre(),
-                    'tipo_objeto_estado' => $actividad->getTipoObjetoEstado()
+                    'tipo_objeto_estado' => $actividad->getTipoObjetoEstado(),
+                    'tipo_objeto_icono' => $actividad->getTipoObjetoIcono()
                 );
 
                 $this->tableGateway->update($data, array('tipo_objeto_id' => $id));

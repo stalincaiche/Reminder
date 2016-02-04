@@ -68,12 +68,25 @@ class ObjetosForm extends Form
             )
         );
 
-        $guardar = new Element\Submit('guardar');
+        $guardar = new Element\Button('guardar');
         $guardar->setAttributes(
             array(
-                'class' => 'btn btn-primary mr5',
+                'class' => 'btn btn-success mr5',
                 'type' => 'submit',
                 'id' => 'guardar',
+            )
+        );
+        $guardar->setOptions(array(
+            'label' => '<i class="glyphicon glyphicon-floppy-disk"></i>',
+            'label_options' => array(
+                'disable_html_escape' => true,
+            )
+        ));
+
+        $etiquetas_id = new Element\Hidden('etiquetas_id');        
+        $etiquetas_id->setAttributes(
+            array(                
+                'id' => 'etiquetas_id',
             )
         );
 
@@ -81,6 +94,7 @@ class ObjetosForm extends Form
         $this->add($objetos_id);
         $this->add($objetos_nombre);
         $this->add($objetos_tipo);
+        $this->add($etiquetas_id);
 
         $this->add($guardar);
     }

@@ -46,6 +46,7 @@ class ActividadesBO
 
     public function guardar($formData)
     {
+        // echo"<pre>";var_dump($formData);exit();
         $actividad = new Actividades();
         $actividad->exchangeArray($formData);
         $actividadesDAO = new ActividadesDAO($this->tableGateway);
@@ -54,6 +55,7 @@ class ActividadesBO
         }
         catch(\Exception $e) {
             $actividad = 0;
+            // echo"<pre>";var_dump($e->getMessage());exit();
         }
         unset($actividadesDAO);
         return $actividad;

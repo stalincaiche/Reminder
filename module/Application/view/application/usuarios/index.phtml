@@ -1,0 +1,34 @@
+<?php if ($this->title){$this->headTitle()->append($this->title);} ?>
+<h1>
+    <span class="zf-green"><?php echo $this->title; ?></span>
+</h1>
+<br>
+<p>
+    <a class="btn btn-primary" href="<?php echo $this->url('usuarios', array('controller' => 'usuarios', 'action'=>'crear'));?>"><i class="glyphicon glyphicon-plus"></i> Nuevo Usuario</a>
+</p>
+<br>
+<table class="table table-hover demo-table-search" id="tablaUsuarios">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Usuario</th>
+            <th>Nombres</th>
+            <th>Estado</th>
+            <th>&nbsp;</th>
+        </tr>    
+    </thead>
+    <tbody>
+        <?php foreach ($this->usuarios as $key => $usuario) : ?>
+        <tr>
+            <td><?php echo $this->escapeHtml($usuario->getUsuariosId());?></td>
+            <td><?php echo $this->escapeHtml($usuario->getUsuariosUsername());?></td>
+            <td><?php echo $this->escapeHtml($usuario->getUsuariosNombres());?></td>
+            <td><?php if($usuario->getUsuariosEstado() == "A"){echo"Activo";}else{echo"Inactivo";}?></td>
+            <td>
+                <button title="Editar Usuario" type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/usuarios/editar/<?php echo $usuario->getUsuariosId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-edit"></i></button>
+                <button title="Eliminar Usuario" type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/usuarios/eliminar/<?php echo $usuario->getUsuariosId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-trash"></i></button>
+            </td>
+        </tr>
+        <?php endforeach; ?>        
+    </tbody>
+</table>

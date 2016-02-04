@@ -1,10 +1,11 @@
-<h1>Objetos</h1>
+<?php if ($this->title){$this->headTitle()->append($this->title);} ?>
+<h1><span class="zf-green"><?php echo $this->title;?></span></h1>
 <div class="row">
     <div class="col-md-12 ">
         <div class="panel-body">
             <div class="row clearfix">
                 <div class="col-sm-12">
-                    <h3>Nuevo Objeto</h3>
+                    <h3><span class="zf-green">Nuevo Objeto</span></h3>
                 </div>                
                     <?php $form= $this->form; $form->prepare();?>
                     <?php echo $this->form()->openTag($form); ?>
@@ -50,7 +51,7 @@
                         ?>
                     </div>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <div class="form-group">
                             <label >
                                 <?php
@@ -69,7 +70,7 @@
                         <label >
                             &nbsp;
                         </label>
-                        <?php echo $this->formSubmit($form->get('guardar'));?>
+                        <?php echo $this->formElement($form->get('guardar'));?>
                     </div>
                 </div>
                 
@@ -79,29 +80,36 @@
     </div> 
 </div>
 
-<h3>Listado de Objetos</h3>
-
-<div class="row">
-    <table class="table">
-     <tr>
-         <th>Actividad</th>
-         <th>ID</th>
-         <th>Nombre</th>
-         <th>Tipo</th>
-         <th>&nbsp;</th>
-     </tr>
-     <?php foreach ($this->objetos as $key => $objeto) : ?>
-     <tr>
-         <td><?php echo $this->escapeHtml($objeto->getObjetosActividadId());?></td>
-         <td><?php echo $this->escapeHtml($objeto->getObjetosId());?></td>
-         <td><?php echo $this->escapeHtml($objeto->getObjetosNombre());?></td>
-         <td><?php echo $this->escapeHtml($objeto->getTipoObjetoNombre());?></td>                    
-         <td>
-            <button type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/editar/<?php echo $objeto->getObjetosId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-edit"></i></button>
-            <button type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/eliminar/<?php echo $objeto->getObjetosId() ?>/<?php echo $this->actividad_id ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-trash"></i></button>
-            <button type="button" class="btn btn-success" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/etiquetas/<?php echo $objeto->getObjetosId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-tags"></i></button>
-         </td>
-     </tr>
-     <?php endforeach; ?>
-    </table>
-</div>
+<h3><span class="zf-green">Listado de Objetos</span></h3>
+<br>
+<table class="table table-hover demo-table-search" id="tablaObjetos">
+    <thead>
+        <tr>
+            <th>Actividad</th>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($this->objetos as $key => $objeto) : ?>
+        <tr>
+            <td><?php echo $this->escapeHtml($objeto->getObjetosActividadId());?></td>
+            <td><?php echo $this->escapeHtml($objeto->getObjetosId());?></td>
+            <td><?php echo $this->escapeHtml($objeto->getObjetosNombre());?></td>
+            <td>
+                <?php if($objeto->getTipoObjetoIcono() != ""){?>
+                <img width="16px" src="<?php echo $this->basePath('img/tipo_objeto/'.$this->escapeHtml($objeto->getTipoObjetoIcono())) ?>" alt="Zend Framework 2"/>
+                <?php }?>
+                <?php echo $this->escapeHtml($objeto->getTipoObjetoNombre());?>
+            </td>                    
+            <td>
+                <button title="Editar Objeto" type="button" class="btn btn-primary" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/editar/<?php echo $objeto->getObjetosId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-edit"></i></button>
+                <button title="Eliminar Objeto" type="button" class="btn btn-danger" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/eliminar/<?php echo $objeto->getObjetosId() ?>/<?php echo $this->actividad_id ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-trash"></i></button>
+                <button title="Etiquetar Objeto" type="button" class="btn btn-info" onclick="window.location='<?php echo $this->basePath() ?>/application/objetos/etiquetas/<?php echo $objeto->getObjetosId() ?>';event.stopPropagation();return false;"><i class="glyphicon glyphicon-tags"></i></button>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

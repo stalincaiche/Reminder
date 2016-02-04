@@ -35,12 +35,6 @@ class TipoobjetosForm extends Form
                 'placeholder' => 'ej: Procedimiento',
                 'id' => 'tipo_objeto_nombre',
                 'class' => 'form-control',
-                //'data-rule-required' => "true",
-                //'data-msg-required' => "Debe ingresar el nombre del usuario",
-                //'data-rule-minlength' => "4",
-                //'data-msg-minlength' => "El nombre del Usuario debe tener mínimo 4 caracteres",
-                //'data-rule-maxlength' => "50",
-                //'data-msg-maxlength' => "El nombre del Usuario debe tener máximo 50 caracteres",
             )
         );
 
@@ -62,18 +56,36 @@ class TipoobjetosForm extends Form
             )
         );
 
-        $guardar = new Element\Submit('guardar');
+        $tipo_objeto_icono = new Element('tipo_objeto_icono');
+        $tipo_objeto_icono->setLabel('Icono (public/img/tipo_objeto/)');
+        $tipo_objeto_icono->setAttributes(
+            array(
+                'type' => 'text',
+                'placeholder' => 'ej: Procedimiento',
+                'id' => 'tipo_objeto_icono',
+                'class' => 'form-control',
+            )
+        );
+
+        $guardar = new Element\Button('guardar');
         $guardar->setAttributes(
             array(
-                'class' => 'btn btn-primary mr5',
+                'class' => 'btn btn-success mr5',
                 'type' => 'submit',
                 'id' => 'guardar',
             )
         );
+        $guardar->setOptions(array(
+            'label' => '<i class="glyphicon glyphicon-floppy-disk"></i>',
+            'label_options' => array(
+                'disable_html_escape' => true,
+            )
+        ));
 
         $this->add($tipo_objeto_id);
         $this->add($tipo_objeto_nombre);
         $this->add($tipo_objeto_estado);
+        $this->add($tipo_objeto_icono);        
 
         $this->add($guardar);
     }

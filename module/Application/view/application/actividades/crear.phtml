@@ -1,12 +1,9 @@
+<?php if ($this->title){$this->headTitle()->append($this->title);} ?>
+<h1>
+    <span class="zf-green"><?php echo $this->title; ?></span>
+</h1>
 <?php
-	$title = 'Nueva Actividad';
- 	$this->headTitle($title);
- 	$form= $this->form;
-?>
-
-<h1><?php echo $this->escapeHtml($title); ?></h1>
-<?php
-$form->setAttribute('action', $this->url('actividades', array('action' => 'guardar')));
+ $form= $this->form;
 $form->prepare();
 ?>
 <div class="row">
@@ -42,6 +39,66 @@ $form->prepare();
 					  	<div class="form-group">
 					    	<label >
 						    	<?php
+						            $actividades_responsable = $form->get('actividades_responsable');
+						            echo $actividades_responsable->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formElement($actividades_responsable);
+						        echo $this->formElementErrors($actividades_responsable);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
+						            $actividades_reporta = $form->get('actividades_reporta');
+						            echo $actividades_reporta->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formInput($actividades_reporta);
+						        echo $this->formElementErrors($actividades_reporta);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
+						            $actividades_area = $form->get('actividades_area');
+						            echo $actividades_area->getLabel();
+						        ?>
+							</label>
+						    <?php
+						        echo $this->formElement($actividades_area);
+						        echo $this->formElementErrors($actividades_area);
+						    ?>
+					  	</div>
+					  	<div class="form-group">
+                            <label>
+                                <?php
+                                    $actividades_fecha = $form->get('actividades_fecha');
+                                    echo $actividades_fecha->getLabel();
+                                ?>
+                            </label>
+                            <?php
+                                echo $this->formInput($actividades_fecha);
+                                echo $this->formElementErrors($actividades_fecha);
+                            ?>                            
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <?php
+                                    $actividades_fecha_fin = $form->get('actividades_fecha_fin');
+                                    echo $actividades_fecha_fin->getLabel();
+                                ?>
+                            </label>
+                            <?php
+                                echo $this->formInput($actividades_fecha_fin);
+                                echo $this->formElementErrors($actividades_fecha_fin);
+                            ?>                            
+                        </div>
+					  	<div class="form-group">
+					    	<label >
+						    	<?php
 						            $actividades_estado = $form->get('actividades_estado');
 						            echo $actividades_estado->getLabel();
 						        ?>
@@ -52,7 +109,7 @@ $form->prepare();
 						    ?>
 					  	</div>
 					  
-					  <?php echo $this->formSubmit($form->get('guardar'));?>
+					  <?php echo $this->formElement($form->get('guardar'));?>
 					<?php echo $this->form()->closeTag();  ?>
 				</div>
 			</div>

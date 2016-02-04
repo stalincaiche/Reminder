@@ -29,9 +29,32 @@ DROP TABLE IF EXISTS `actividades`;
 CREATE TABLE `actividades` (
   `actividades_id` int(11) NOT NULL auto_increment,
   `actividades_nombre` varchar(45) NOT NULL,
-  `actividades_fecha` datetime NOT NULL,
+  `actividades_fecha` date NOT NULL,
   `actividades_estado` enum('A','F') default 'A',
-  PRIMARY KEY  (`actividades_id`)
+  `actividades_responsable` int(11) default NULL,
+  `actividades_area` int(11) default NULL,
+  `actividades_reporta` varchar(45) default NULL,
+  `actividades_fecha_fin` date default NULL,
+  PRIMARY KEY  (`actividades_id`),
+  KEY `actividades_responsable_fk_idx` (`actividades_responsable`),
+  KEY `actividades_area_fk_idx` (`actividades_area`),
+  CONSTRAINT `actividades_area_fk` FOREIGN KEY (`actividades_area`) REFERENCES `areas` (`areas_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `actividades_responsable_fk` FOREIGN KEY (`actividades_responsable`) REFERENCES `usuarios` (`usuarios_id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `areas`
+--
+
+DROP TABLE IF EXISTS `areas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `areas` (
+  `areas_id` int(11) NOT NULL auto_increment,
+  `areas_nombre` varchar(45) NOT NULL,
+  `areas_estado` enum('A','I') default NULL,
+  PRIMARY KEY  (`areas_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -98,7 +121,25 @@ CREATE TABLE `tipo_objeto` (
   `tipo_objeto_id` int(11) NOT NULL auto_increment,
   `tipo_objeto_nombre` varchar(45) NOT NULL,
   `tipo_objeto_estado` enum('A','I') NOT NULL,
+  `tipo_objeto_icono` varchar(45) default NULL,
   PRIMARY KEY  (`tipo_objeto_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuarios` (
+  `usuarios_id` int(11) NOT NULL auto_increment,
+  `usuarios_username` varchar(45) NOT NULL,
+  `usuarios_nombres` varchar(100) NOT NULL,
+  `usuarios_password` varchar(45) default NULL,
+  `usuarios_estado` enum('A','I') default NULL,
+  PRIMARY KEY  (`usuarios_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -111,4 +152,4 @@ CREATE TABLE `tipo_objeto` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-28 17:46:57
+-- Dump completed on 2016-02-03 11:34:34

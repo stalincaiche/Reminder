@@ -24,8 +24,14 @@ class TipoobjetoController extends AbstractActionController
 
     public function indexAction()
     {
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+        $script = $renderer->render('application/tipoobjeto/js/index');
+        $renderer->headScript()->appendScript($script, 'text/javascript');
+
         $datos = array(
-            'tipos' => $this->getTipoObjetosBO()->obtenerTodos() ,            
+            'tipos' => $this->getTipoObjetosBO()->obtenerTodos() ,
+            'title' => 'Tipos de Objeto'
         );
         return new ViewModel($datos);
     }
@@ -48,7 +54,14 @@ class TipoobjetoController extends AbstractActionController
         }
 
         $form->bind($tipo);
-        $form->get('guardar')->setAttribute('value', 'Editar');
+        $form->get('guardar')->setOptions(
+            array(
+                'label' => '<i class="glyphicon glyphicon-floppy-saved"></i> Editar',
+                'label_options' => array(
+                    'disable_html_escape' => true,
+                )
+            )
+        );
 
         $estados = array(
                 'A' => 'Activo',
@@ -57,7 +70,12 @@ class TipoobjetoController extends AbstractActionController
         $form->get('tipo_objeto_estado')->setValueOptions($estados);
 
         
-        $modelView = new ViewModel(array('form' => $form));
+        $modelView = new ViewModel(
+            array(
+                'form' => $form,
+                'title' => 'Editar Tipo de Objeto'
+            )
+        );
 
         $modelView->setTemplate('application/tipoobjeto/crear');
         return $modelView;
@@ -66,7 +84,15 @@ class TipoobjetoController extends AbstractActionController
     public function crearAction()
     {
         $form = new TipoobjetosForm();
-        $form->get('guardar')->setValue('Agregar');
+        $form->get('guardar')->setOptions(
+            array(
+                'label' => '<i class="glyphicon glyphicon-floppy-disk"></i> Guardar',
+                'label_options' => array(
+                    'disable_html_escape' => true,
+                )
+            )
+        );
+
         $estados = array(
                 'A' => 'Activo',
                 'I' => 'Inactivo',
@@ -75,7 +101,8 @@ class TipoobjetoController extends AbstractActionController
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/tipoobjeto/guardar');
 
         $datos = array(
-            'form' => $form
+            'form' => $form,
+            'title' => 'Nuevo Tipo de Objeto'
         );
 
         return new ViewModel($datos);
@@ -104,8 +131,20 @@ class TipoobjetoController extends AbstractActionController
                 'I' => 'Inactivo',
             );
             $form->get('tipo_objeto_estado')->setValueOptions($estados);
-
-            $modelView = new ViewModel(array('form' => $form));
+            $form->get('guardar')->setOptions(
+                array(
+                    'label' => '<i class="glyphicon glyphicon-floppy-disk"></i> Guardar',
+                    'label_options' => array(
+                        'disable_html_escape' => true,
+                    )
+                )
+            );
+            $modelView = new ViewModel(
+                array(
+                    'form' => $form,
+                    'title' => 'Guardar Tipo de Objeto'
+                )
+            );
             $modelView->setTemplate('application/tipoobjeto/crear');
             return $modelView;
         }

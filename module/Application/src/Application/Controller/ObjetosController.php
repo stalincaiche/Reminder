@@ -48,11 +48,23 @@ class ObjetosController extends AbstractActionController
 
     public function indexAction()
     {
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+        $script = $renderer->render('application/objetos/js/index');
+        $renderer->headScript()->appendScript($script, 'text/javascript');
+
         $actividad_id = (int)$this->params()->fromRoute('id', 0);
 
         $form = new ObjetosForm("objetosform");
         $form->setAttribute('class', 'form-inline');
-        $form->get('guardar')->setAttribute('value', 'Crear');
+        $form->get('guardar')->setOptions(
+            array(
+                'label' => '<i class="glyphicon glyphicon-floppy-disk"></i> Guardar',
+                'label_options' => array(
+                    'disable_html_escape' => true,
+                )
+            )
+        );
 
         $tipos = $this->getTipoObjetosBO()->obtenerCombo();
 
@@ -62,7 +74,25 @@ class ObjetosController extends AbstractActionController
         $datos = array(
             'objetos' => $this->getObjetosBO()->obtenerTodosPorActividad($actividad_id) ,            
             'actividad_id' => $actividad_id ,
-            'form' => $form    
+            'form' => $form,
+            'title' =>  "Objetos"
+        );
+        return new ViewModel($datos);
+    }
+
+    public function verAction()
+    {
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+        $script = $renderer->render('application/objetos/js/ver');
+        $renderer->headScript()->appendScript($script, 'text/javascript');
+
+        $actividad_id = (int)$this->params()->fromRoute('id', 0);        
+
+        $datos = array(
+            'objetos' => $this->getObjetosBO()->obtenerTodosPorActividad($actividad_id) ,            
+            'actividad_id' => $actividad_id ,            
+            'title' =>  "Objetos y sus Etiquetas"
         );
         return new ViewModel($datos);
     }
@@ -85,14 +115,69 @@ class ObjetosController extends AbstractActionController
         }
 
         $form->bind($objeto);
-        $form->get('guardar')->setAttribute('value', 'Editar');
-
+        $form->get('guardar')->setOptions(
+            array(
+                'label' => '<i class="glyphicon glyphicon-floppy-saved"></i> Editar',
+                'label_options' => array(
+                    'disable_html_escape' => true,
+                )
+            )
+        );
 
         $tipos = $this->getTipoObjetosBO()->obtenerCombo();
         $form->get('objetos_tipo')->setValueOptions($tipos);
 
         
-        $modelView = new ViewModel(array('form' => $form));
+        $modelView = new ViewModel(
+            array(
+                'form' => $form,
+                'title' => 'Editar Objeto'
+            )
+        );
+
+        $modelView->setTemplate('application/objetos/crear');
+        return $modelView;
+    }
+
+    public function editar2Action()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        $etiqueta_id = (int)$this->params()->fromRoute('id2', 0);
+
+        if (!$id) {
+            return $this->redirect()->toRoute('objetos');
+        }
+
+        $form = new ObjetosForm("objetosform");
+        $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/objetos/guardar2');
+
+        $objeto = $this->getObjetosBO()->obtenerPorId($id);
+
+        if (!is_object($objeto)) {
+            return $this->redirect()->toRoute('objetos');
+        }
+
+        $form->bind($objeto);
+        $form->get('etiquetas_id')->setAttribute('value' , $etiqueta_id);
+        $form->get('guardar')->setOptions(
+            array(
+                'label' => '<i class="glyphicon glyphicon-floppy-saved"></i> Editar',
+                'label_options' => array(
+                    'disable_html_escape' => true,
+                )
+            )
+        );
+
+        $tipos = $this->getTipoObjetosBO()->obtenerCombo();
+        $form->get('objetos_tipo')->setValueOptions($tipos);
+
+        
+        $modelView = new ViewModel(
+            array(
+                'form' => $form,
+                'title' => 'Editar Objeto'
+            )
+        );
 
         $modelView->setTemplate('application/objetos/crear');
         return $modelView;
@@ -116,13 +201,25 @@ class ObjetosController extends AbstractActionController
         }
 
         $form->bind($objeto);
-        $form->get('guardar')->setAttribute('value', 'Editar');
+        $form->get('guardar')->setOptions(
+            array(
+                'label' => '<i class="glyphicon glyphicon-floppy-saved"></i> Editar',
+                'label_options' => array(
+                    'disable_html_escape' => true,
+                )
+            )
+        );
 
         $tipos = $this->getTipoObjetosBO()->obtenerCombo();
         $form->get('objetos_tipo')->setValueOptions($tipos);
 
         
-        $modelView = new ViewModel(array('form' => $form));
+        $modelView = new ViewModel(
+            array(
+                'form' => $form,
+                'title' => 'Editar Objeto'
+            )
+        );
 
         $modelView->setTemplate('application/objetos/crear');
         return $modelView;
@@ -130,6 +227,11 @@ class ObjetosController extends AbstractActionController
 
     public function etiquetasAction()
     {
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+        $script = $renderer->render('application/objetos/js/etiquetas');
+        $renderer->headScript()->appendScript($script, 'text/javascript');
+
         $id = (int)$this->params()->fromRoute('id', 0);
 
         if (!$id) {
@@ -145,7 +247,16 @@ class ObjetosController extends AbstractActionController
 
         $form = new EtiquetasForm("etiquetasform");
         $form->setAttribute('class', 'form-inline');
-        $form->get('guardar')->setAttribute('value', 'Agregar');
+        
+        $form->get('guardar')->setOptions(
+            array(
+                'label' => '<i class="glyphicon glyphicon-floppy-disk"></i> Guardar',
+                'label_options' => array(
+                    'disable_html_escape' => true,
+                )
+            )
+        );
+
         $form->get('objetos_id')->setAttribute('value', $id);
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/etiquetas/vincular');
 
@@ -154,6 +265,7 @@ class ObjetosController extends AbstractActionController
                 'objeto' => $objeto,
                 'etiquetas' => $etiquetas,
                 'form' => $form,
+                'title' => 'Etiquetas'
             )
         );
         return $modelView;
@@ -196,8 +308,21 @@ class ObjetosController extends AbstractActionController
         if (!$form->isValid()) {                        
             $tipos = $this->getTipoObjetosBO()->obtenerCombo();           
             $form->get('objetos_tipo')->setValueOptions($tipos);
+            $form->get('guardar')->setOptions(
+                array(
+                    'label' => '<i class="glyphicon glyphicon-floppy-disk"></i> Guardar',
+                    'label_options' => array(
+                        'disable_html_escape' => true,
+                    )
+                )
+            );
 
-            $modelView = new ViewModel(array('form' => $form));
+            $modelView = new ViewModel(
+                array(
+                    'form' => $form,
+                    'title' => 'Editar Objeto'
+                )
+            );
             $modelView->setTemplate('application/objetos/crear');
             return $modelView;
         }
@@ -212,6 +337,58 @@ class ObjetosController extends AbstractActionController
                 'controller' => 'objetos',
                 'action' => 'index',
                 'id' => $data["objetos_actividad_id"]
+            )
+        );
+    }
+
+    public function guardar2Action()
+    {
+        if (!$this->request->isPost()) {
+            return $this->redirect()->toRoute(
+                'etiquetas',
+                array('controller' => 'etiquetas')
+            );
+        }
+
+        $form = new ObjetosForm("objetosform");
+        $form->setInputFilter(new ObjetosFormValidator());
+        // Obtenemos los datos desde el Formulario con POST data:
+        $data = $this->request->getPost();
+
+        $form->setData($data);        
+        
+        if (!$form->isValid()) {                        
+            $tipos = $this->getTipoObjetosBO()->obtenerCombo();           
+            $form->get('objetos_tipo')->setValueOptions($tipos);
+            $form->get('guardar')->setOptions(
+                array(
+                    'label' => '<i class="glyphicon glyphicon-floppy-disk"></i> Guardar',
+                    'label_options' => array(
+                        'disable_html_escape' => true,
+                    )
+                )
+            );
+
+            $modelView = new ViewModel(
+                array(
+                    'form' => $form,
+                    'title' => 'Editar Objeto'
+                )
+            );
+            $modelView->setTemplate('application/objetos/crear');
+            return $modelView;
+        }
+        
+        $data = $form->getData();
+
+        $id = $this->getObjetosBO()->guardar($data);
+
+        return $this->redirect()->toRoute(
+            'etiquetas',
+            array(
+                'controller' => 'etiquetas',
+                'action' => 'objetos',
+                'id' => $data["etiquetas_id"]
             )
         );
     }
@@ -239,8 +416,21 @@ class ObjetosController extends AbstractActionController
 
             $tipos = $this->getTipoObjetosBO()->obtenerCombo();       
             $form->get('objetos_tipo')->setValueOptions($tipos);
+            $form->get('guardar')->setOptions(
+                array(
+                    'label' => '<i class="glyphicon glyphicon-floppy-disk"></i> Guardar',
+                    'label_options' => array(
+                        'disable_html_escape' => true,
+                    )
+                )
+            );
 
-            $modelView = new ViewModel(array('form' => $form));
+            $modelView = new ViewModel(
+                array(
+                    'form' => $form,
+                    'title' => 'Guardar Objeto'
+                )
+            );
             $modelView->setTemplate('application/objetos/crear');
             return $modelView;
         }
@@ -277,6 +467,26 @@ class ObjetosController extends AbstractActionController
         );
     }
 
+    public function eliminar2Action()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        $id2 = (int)$this->params()->fromRoute('id2', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('objetos');
+        }
+
+        $this->getObjetosBO()->eliminar($id);
+
+        return $this->redirect()->toRoute(
+            'etiquetas',
+            array(
+                'controller' => 'etiquetas',
+                'action' => 'objetos',
+                'id' => $id2                
+            )
+        );
+    }
+
     public function deleteAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
@@ -298,8 +508,14 @@ class ObjetosController extends AbstractActionController
 
     public function listadoAction()
     {
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+        $script = $renderer->render('application/objetos/js/listado');
+        $renderer->headScript()->appendScript($script, 'text/javascript');
+
         $datos = array(
-            'objetos' => $this->getObjetosBO()->obtenerTodos() ,            
+            'objetos' => $this->getObjetosBO()->obtenerTodos() ,
+            'title' => 'Administrar Objetos'           
         );
         return new ViewModel($datos);
     }
