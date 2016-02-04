@@ -42,15 +42,24 @@
                         <li class=""><a href="<?php echo $this->url('actividades') ?>"><?php echo $this->translate('Mis Actividades') ?></a></li>
                         <li class=""><a href="<?php echo $this->url('etiquetas') ?>"><?php echo $this->translate('Etiquetas') ?></a></li>
                         <li class=""><a href="<?php echo $this->url('administracion') ?>"><?php echo $this->translate('Administrar') ?></a></li>
-                        <li class=""><a href="<?php 
+                        <li class=""><a href="<?php
                         echo $this->url(
                             'administracion',
                             array(
                                 'controller' => 'admin',
-                                'action' => 'colaborar'                
+                                'action' => 'colaborar'
                             )
-                        ) 
+                        )
                         ?>"><?php echo $this->translate('Colaborar') ?></a></li>
+                        <li class=""><a href="<?php
+                        echo $this->url(
+                            'actividades',
+                            array(
+                                'controller' => 'actividades',
+                                'action' => 'bitacora'
+                            )
+                        )
+                        ?>"><?php echo $this->translate('Bitacora') ?></a></li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
