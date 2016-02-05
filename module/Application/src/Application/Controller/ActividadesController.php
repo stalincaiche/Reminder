@@ -7,6 +7,7 @@ use Zend\View\Model\ViewModel;
 
 use Application\Form\Actividades\ActividadesForm;
 use Application\Form\Actividades\ActividadesFormValidator;
+use Zend\Session\Container;
 
 class ActividadesController extends AbstractActionController
 {
@@ -49,10 +50,13 @@ class ActividadesController extends AbstractActionController
         $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
         $script = $renderer->render('application/actividades/js/index');
         $renderer->headScript()->appendScript($script, 'text/javascript');
+        
+        $sesion = new Container('reminderSesion');
+        $user_user_id = $sesion->user_user_id;
 
         $datos = array(
             'title' =>  "Actividades",
-            'actividades' => $this->getActividadesBO()->obtenerActivas() ,            
+            'actividades' => $this->getActividadesBO()->obtenerActivasPorUsuario($user_user_id) ,            
         );
         return new ViewModel($datos);
     }
@@ -191,9 +195,16 @@ class ActividadesController extends AbstractActionController
         );
         $form->get('actividades_estado')->setValueOptions($estados);
         $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/actividades/guardar');
+
+        $sesion = new Container('reminderSesion');
+        $user_username = $sesion->user_username;
+        $user_user_id = $sesion->user_user_id;
         
-        $usuarios = $this->getUsuariosBO()->obtenerCombo();        
-        $form->get('actividades_responsable')->setValueOptions($usuarios);
+        
+
+        
+        // $usuarios = $this->getUsuariosBO()->obtenerCombo();
+        $form->get('actividades_responsable')->setValueOptions(array( $user_user_id => $user_username ));
 
         $areas = $this->getAreasBO()->obtenerCombo();        
         $form->get('actividades_area')->setValueOptions($areas);

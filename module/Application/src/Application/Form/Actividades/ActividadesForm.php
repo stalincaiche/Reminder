@@ -64,7 +64,7 @@ class ActividadesForm extends Form
 
         $actividades_responsable = new Element\Select('actividades_responsable');
         $actividades_responsable->setLabel('Responsable');
-        $actividades_responsable->setEmptyOption('Elige un Responsable..');
+        // $actividades_responsable->setEmptyOption('Elige un Responsable..');
 
         $actividades_responsable->setOptions(
             array(

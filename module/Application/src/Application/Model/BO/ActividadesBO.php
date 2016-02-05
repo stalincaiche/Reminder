@@ -30,6 +30,14 @@ class ActividadesBO
         return $actividades;
     }
 
+    public function obtenerActivasPorUsuario($usuarios_id)
+    {
+        $actividadesDAO = new ActividadesDAO($this->tableGateway);
+        $actividades = $actividadesDAO->obtenerActivasPorUsuario($usuarios_id);
+        unset($actividadesDAO);
+        return $actividades;
+    }
+
 
     public function obtenerPorId($id)
     {
