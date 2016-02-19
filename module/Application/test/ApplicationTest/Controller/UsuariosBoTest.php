@@ -3,8 +3,8 @@ namespace ApplicationTest\Controller;
 
 use Application\Model\BO\UsuariosBO;
 use Application\Model\Entity\Usuarios;
-// require (dirname(__FILE__).'/../../../src/Application/Model/BO/UsuariosBO.php');
-// require (dirname(__FILE__).'/../../../src/Application/Model/Entity\Usuarios.php');
+require (__DIR__.'/../../../src/Application/Model/BO/UsuariosBO.php');
+require (__DIR__.'/../../../src/Application/Model/Entity\Usuarios.php');
 
 class UsuariosBoTest extends \PHPUnit_Framework_TestCase
 {
