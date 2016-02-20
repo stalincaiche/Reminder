@@ -8,7 +8,7 @@ class Usuarios
     private $usuarios_nombres;
     private $usuarios_password;
     private $usuarios_estado;
-    
+
     public function getUsuariosId()
     {
         return $this->usuarios_id;
@@ -68,7 +68,7 @@ class Usuarios
 
         return $this;
     }
-    
+
     public function exchangeArray($data)
     {
         $this->usuarios_id = (isset($data['usuarios_id'])) ? $data['usuarios_id'] : null;
@@ -83,6 +83,6 @@ class Usuarios
         return get_object_vars($this);
     }
 
-    
+
 
 }

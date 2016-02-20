@@ -1,12 +1,6 @@
 <phpunit backupGlobals="true" bootstrap="./bootstrap.php" colors="true">
-	<!-- <filter>
-		<whitelist>
-			<directory>../module</directory>
-		</whitelist>
-	</filter> -->
 	<testsuites>
 		<testsuite>
-			<!-- <directory>../module</directory> -->
 			<directory>../module/Application/test</directory>
 		</testsuite>
 	 </testsuites>
