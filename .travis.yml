@@ -9,11 +9,11 @@ php:
   - nightly
 
 before_script:
-  - pyrus install pear/PHP_CodeSniffer
+  #- pyrus install pear/PHP_CodeSniffer
   - phpenv rehash
   - phpcs --config-set default_standard PEAR
   - composer install
 
 script:
-  - phpcs --standard=build/travis-ci-phpcs.xml --extensiones=php --ignore=vendor
+  - phpcs --standard=build/travis-ci-phpcs.xml --extensions=php --ignore=vendor
   - phpunit --configuration tests/phpunit.xml
