@@ -4,10 +4,9 @@
 
  <file>bootstrap.php</file>
 
- <exclude-pattern>*/Tests/*</exclude-pattern>
+ <exclude-pattern>*/vendor/*</exclude-pattern>
 
  <arg name="report" value="summary"/>
- <arg value="np"/>
 
- <rule ref="PHPCS"/>
+ <rule ref="PEAR"/>
 </ruleset>

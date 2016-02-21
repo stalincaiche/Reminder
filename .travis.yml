@@ -13,5 +13,5 @@ before_script:
 script:
   - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php vendor/bin/phpcs --config-set php_path php; fi
   - phpunit --configuration tests/phpunit.xml
-  - php vendor/bin/phpcs module --standard=PEAR --report=summary -np
+  - php vendor/bin/phpcs  --standard=tests/phpcs.xml --standard=PEAR --report=summary -np
 
