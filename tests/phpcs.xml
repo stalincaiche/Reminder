@@ -2,10 +2,9 @@
 <ruleset name="PHP_CodeSniffer">
  <description>The coding standard for PHP_CodeSniffer itself.</description>
 
- <file>../module/Application/</file>
- <file>scripts</file>
+ <file>bootstrap.php</file>
 
- <exclude-pattern>*/language/*</exclude-pattern>
+ <exclude-pattern>*/Tests/*</exclude-pattern>
 
  <arg name="report" value="summary"/>
  <arg value="np"/>
