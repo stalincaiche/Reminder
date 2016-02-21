@@ -1,15 +1,17 @@
+sudo: false
+
 language: php
+
 php:
   - '5.5'
   - '5.6'
   - '7.0'
 
 before_script:
-  - pyrus install pear/PHP_CodeSniffer
-  - phpenv rehash
-  - phpcs --config-set default_standard PEAR
   - composer install
 
 script:
-  - phpcs --standard=tests/phpcs.xml --extensions=php --ignore=config/,data/,public/,vendor/
+  - if [ $TRAVIS_PHP_VERSION != "hhvm" ]; then php vendor/bin/phpcs --config-set php_path php; fi
   - phpunit --configuration tests/phpunit.xml
+  - php vendor/bin/phpcs module --standard=PEAR --report=summary -np
+
