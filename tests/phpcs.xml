@@ -1,12 +1,7 @@
 <?xml version="1.0"?>
 <ruleset name="PHP_CodeSniffer">
- <description>The coding standard for PHP_CodeSniffer itself.</description>
-
- <file>bootstrap.php</file>
-
- <exclude-pattern>*/vendor/*</exclude-pattern>
-
- <arg name="report" value="summary"/>
-
- <rule ref="PEAR"/>
+	<description>The coding standard for PHP_CodeSniffer itself.</description>
+ 		<file>bootstrap.php</file>
+ 		<arg name="report" value="summary"/>
+ 	<rule ref="PEAR"/>
 </ruleset>
