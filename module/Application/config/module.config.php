@@ -150,6 +150,36 @@ return array(
                     ),
                 ),
             ),
+            'login' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/application/login[/:action][/:id]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Login',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'inicio' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/application/inicio[/:action][/:id]',
+                    'constraints' => array(
+                        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Inicio',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -181,6 +211,7 @@ return array(
             'Application\Controller\Tipoobjeto' => Controller\TipoobjetoController::class,
             'Application\Controller\Areas' => Controller\AreasController::class,
             'Application\Controller\Usuarios' => Controller\UsuariosController::class,
+            'Application\Controller\Inicio' => Controller\InicioController::class,
         ),
     ),
     'view_manager' => array(

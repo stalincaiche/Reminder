@@ -52,6 +52,25 @@ class ActividadesDAO
         return $resultSet;
     }
 
+    public function obtenerActivasPorUsuario($usuarios_id)
+    {
+        $sql = new Sql($this->tableGateway->adapter);
+        $select = $sql->select();
+        $select->from('actividades');
+        $select->where(array(
+            'actividades.actividades_estado' => 'A',
+            'actividades.actividades_responsable' => $usuarios_id,
+        ));
+        $select->join(
+            'usuarios', 'usuarios.usuarios_id = actividades.actividades_responsable', array(
+            'usuarios_username', 'usuarios_nombres'
+            ),
+            'left'
+        );
+        $resultSet = $this->tableGateway->selectWith($select);
+        return $resultSet;
+    }
+
     public function obtenerPorId($id)
     {
         $id = (int)$id;

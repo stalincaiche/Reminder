@@ -15,6 +15,8 @@ use Zend\Mvc\MvcEvent;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
+use Zend\Session\Container;
+
 use Application\Model\BO\ActividadesBO;
 use Application\Model\Entity\Actividades;
 
@@ -38,9 +40,98 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager        = $e->getApplication()->getEventManager();
+        $app = $e->getParam("application");
+
+        $app->getEventManager()->attach(
+            'dispatch',
+            array(
+                $this,
+                'initAuth'
+            ),
+            200
+        );
+        
+
         $moduleRouteListener = new ModuleRouteListener();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener->attach($eventManager);
+    }
+
+    public function initAuth(MvcEvent $e)
+    {
+        $application = $e->getApplication();
+        $matches = $e->getRouteMatch();
+
+        $controller = $matches->getParam('controller');
+        $action = $matches->getParam('action');
+
+        $services = $application->getServiceManager();
+
+        $sesion = new Container('reminderSesion');
+
+        // ¿Es el controlador de errores?
+        if ($controller === "Application\Controller\Error") {
+
+            // No valida permisos
+            return;
+        }
+
+        // No valida permisos
+        if ($action == "error") {
+            return;
+        }
+
+        // ¿es la página de Marketing?
+        if ($controller === "Application\Controller\Index" && in_array($action, array('index'))) {
+
+            // ¿Tiene una sesión activa ?
+            if ($sesion->offsetExists('user_username')) {
+
+                // Si se encuentra en la página de marketing y tiene una sesion activa
+                // se lo envia de regreso a la página principal
+                $matches->setParam("controller", "Application\Controller\Inicio");
+                $matches->setParam("action", "index");
+                // return;
+            } else {
+
+                // Si no tiene una sesion activa se lo deja permanecer en la página de marketing
+                return;
+            }
+        }
+
+        if ($controller === "Application\Controller\Admin" && in_array($action, array('colaborar'))) {
+
+            return;
+            
+        }
+
+        // ¿es el login o se está autenticando ?
+        if ($controller === "Application\Controller\Login" && in_array($action, array('index','autenticar','logout'))) {
+
+            if($action =="logout")
+            {
+                return;
+            }
+            if ($sesion->offsetExists('user_username')) {
+
+                // Si se encuentra en la página de marketing y tiene una sesion activa
+                // se lo envia de regreso a la página principal
+                $matches->setParam("controller", "Application\Controller\Inicio");
+                $matches->setParam("action", "index");
+                // return;
+            } else {
+
+                // Si no tiene una sesion activa se lo deja permanecer en la página de marketing
+                return;
+            }
+        }
+        // var_dump($sesion->offsetExists('user_username'));exit();
+        //Si no hay acl con esto se valida que inicie sesión
+        if (!$sesion->offsetExists('user_username')) {
+            $matches->setParam("controller", "Application\Controller\Login");
+            $matches->setParam("action", "index");            
+            return;
+        }
     }
 
     public function getConfig()
@@ -59,10 +150,33 @@ class Module
         );
     }
 
+    public function getControllerConfig()
+    {
+        return array(
+            'factories' => array(
+                'Application\Controller\Login' => function ($sm)
+                {
+                    $locator = $sm->getServiceLocator();
+                    //$logger = $locator->get('Zend\Log');
+                    $controller = new \Application\Controller\LoginController();
+                    $controller->setLogin($locator->get('Application\Model\Login'));
+                    //$controller->setLogger($logger);
+                    return $controller;
+                }
+                ,
+            )
+        );
+    }
+
     public function getServiceConfig()
     {
         return array(
             'factories' => array(
+                'Application\Model\Login' => function ($sm)
+                {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new \Application\Model\Login($dbAdapter);
+                },
                 'Application\Model\ActividadesBO' => function ($sm)
                 {
                     $tableGateway = $sm->get("ActividadesTableGateway");
@@ -149,6 +263,7 @@ class Module
                     $resultSetPrototype->setArrayObjectPrototype(New Areas());
                     return new TableGateway("areas", $dbAdapter, NULL, $resultSetPrototype);
                 },
+                
             ) ,
         );
     }

@@ -4338,7 +4338,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar:before,
 .navbar:after {
-  display: table;
+  display: none;
   content: " ";
 }
 
