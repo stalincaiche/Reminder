@@ -14,7 +14,7 @@ use Application\Form\Etiquetas\EtiquetasFormValidator;
 class ObjetosController extends AbstractActionController
 {
 
-	private $objetosBO;
+    private $objetosBO;
     private $etiquetasBO;
     private $tipoObjetosBO;
 
@@ -158,7 +158,7 @@ class ObjetosController extends AbstractActionController
         }
 
         $form->bind($objeto);
-        $form->get('etiquetas_id')->setAttribute('value' , $etiqueta_id);
+        $form->get('etiquetas_id')->setAttribute('value', $etiqueta_id);
         $form->get('guardar')->setOptions(
             array(
                 'label' => '<i class="glyphicon glyphicon-floppy-saved"></i> Editar',

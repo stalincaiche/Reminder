@@ -14,9 +14,9 @@ class ActividadesController extends AbstractActionController
 
     private $actividadesBO;
     private $usuariosBO;
-	private $areasBO;
+    private $areasBO;
 
-	public function getActividadesBO()
+    public function getActividadesBO()
     {
         if (!$this->actividadesBO) {
             $sm = $this->getServiceLocator();
@@ -436,7 +436,8 @@ class ActividadesController extends AbstractActionController
     {
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('actividades', 
+            return $this->redirect()->toRoute(
+                'actividades', 
                 array(
                     'controller' => 'actividades',
                     'action' => 'listado'
@@ -446,7 +447,8 @@ class ActividadesController extends AbstractActionController
 
         $this->getActividadesBO()->finalizar($id);
 
-        return $this->redirect()->toRoute('actividades', 
+        return $this->redirect()->toRoute(
+            'actividades', 
             array(
                 'controller' => 'actividades',
                 'action' => 'listado'
@@ -458,7 +460,8 @@ class ActividadesController extends AbstractActionController
     {
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('actividades', 
+            return $this->redirect()->toRoute(
+                'actividades', 
                 array(
                     'controller' => 'actividades',
                     'action' => 'listado'
@@ -468,7 +471,8 @@ class ActividadesController extends AbstractActionController
 
         $this->getActividadesBO()->activar($id);
 
-        return $this->redirect()->toRoute('actividades', 
+        return $this->redirect()->toRoute(
+            'actividades', 
             array(
                 'controller' => 'actividades',
                 'action' => 'listado'

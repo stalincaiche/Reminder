@@ -3,5 +3,5 @@
 	<description>The coding standard for PHP_CodeSniffer itself.</description>
  		<file>module/Application/Module.php</file>
  		<arg name="report" value="summary"/>
- 	<rule ref="PEAR"/>
+ 	<rule ref="Zend"/>
 </ruleset>

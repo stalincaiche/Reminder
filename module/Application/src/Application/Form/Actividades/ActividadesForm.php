@@ -147,12 +147,14 @@ class ActividadesForm extends Form
                 'id' => 'guardar',
             )
         );
-        $guardar->setOptions(array(
+        $guardar->setOptions(
+            array(
             'label' => '<i class="glyphicon glyphicon-floppy-disk"></i>',
             'label_options' => array(
                 'disable_html_escape' => true,
             )
-        ));
+            )
+        );
 
         $this->add($actividades_id);
         $this->add($actividades_nombre);

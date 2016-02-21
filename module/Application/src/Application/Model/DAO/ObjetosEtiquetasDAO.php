@@ -30,10 +30,12 @@ class ObjetosEtiquetasDAO
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
         $select->from('objetos_etiquetas');
-        $select->where(array(
+        $select->where(
+            array(
             'objetos_etiquetas.objetos_id' => $objeto,
             'objetos_etiquetas.etiquetas_id' => $etiqueta,
-        ));        
+            )
+        );        
         $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }
@@ -60,9 +62,11 @@ class ObjetosEtiquetasDAO
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
         $select->from('objetos_etiquetas');
-        $select->where(array(
+        $select->where(
+            array(
             'objetos_etiquetas.objetos_id' => $objeto,
-        ));
+            )
+        );
         $select->join(
             'etiquetas', 'etiquetas.etiquetas_id = objetos_etiquetas.etiquetas_id', array(
             'etiquetas_nombre','etiquetas_id'
@@ -78,9 +82,11 @@ class ObjetosEtiquetasDAO
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
         $select->from('objetos_etiquetas');
-        $select->where(array(
+        $select->where(
+            array(
             'objetos_etiquetas.etiquetas_id' => $etiqueta,
-        ));
+            )
+        );
         $select->join(
             'objetos', 'objetos.objetos_id = objetos_etiquetas.objetos_id', array(
             'objetos_nombre', 'objetos_actividad_id','objetos_tipo'

@@ -30,9 +30,11 @@ class UsuariosDAO
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
         $select->from('usuarios');
-        $select->where(array(
+        $select->where(
+            array(
             'usuarios.usuarios_estado' => 'A',
-        ));        
+            )
+        );        
         $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }

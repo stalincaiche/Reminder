@@ -56,7 +56,7 @@ return array(
                         'controller' => 'Application\Controller\Actividades',
                         'action'     => 'index',
                     ),
-                ),
+                 ),
             ),
             'objetos' => array(
                  'type'    => 'segment',
@@ -72,7 +72,7 @@ return array(
                         'controller' => 'Application\Controller\Objetos',
                         'action'     => 'index',
                     ),
-                ),
+                 ),
             ),
             'etiquetas' => array(
                  'type'    => 'segment',
@@ -88,7 +88,7 @@ return array(
                         'controller' => 'Application\Controller\Etiquetas',
                         'action'     => 'index',
                     ),
-                ),
+                 ),
             ),
             'administracion' => array(
                  'type'    => 'segment',
@@ -103,7 +103,7 @@ return array(
                         'controller' => 'Application\Controller\Admin',
                         'action'     => 'index',
                     ),
-                ),
+                 ),
             ),
             'tipoobjetos' => array(
                  'type'    => 'segment',
@@ -118,7 +118,7 @@ return array(
                         'controller' => 'Application\Controller\Tipoobjeto',
                         'action'     => 'index',
                     ),
-                ),
+                 ),
             ),
             'areas' => array(
                  'type'    => 'segment',
@@ -133,7 +133,7 @@ return array(
                         'controller' => 'Application\Controller\Areas',
                         'action'     => 'index',
                     ),
-                ),
+                 ),
             ),
             'usuarios' => array(
                  'type'    => 'segment',
@@ -148,7 +148,7 @@ return array(
                         'controller' => 'Application\Controller\Usuarios',
                         'action'     => 'index',
                     ),
-                ),
+                 ),
             ),
             'login' => array(
                 'type'    => 'segment',

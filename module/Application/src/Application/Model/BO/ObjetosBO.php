@@ -50,7 +50,7 @@ class ObjetosBO
         try {
             $objetos = $objetosDAO->obtenerPorNombre($nombre);
             
-            if($objetos->count() > 0){
+            if($objetos->count() > 0) {
                 return true;
             }else{
                 return false;
@@ -70,7 +70,7 @@ class ObjetosBO
         $objetosDAO = new ObjetosDAO($this->tableGateway);
         try {
             $existe = $this->obtenerPorNombre($objeto->getObjetosNombre());
-            if($existe){
+            if($existe) {
                 $objeto = $objetosDAO->actualizar($objeto);
             }else{
                 $objeto = $objetosDAO->guardar($objeto);

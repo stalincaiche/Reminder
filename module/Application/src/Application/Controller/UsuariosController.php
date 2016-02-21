@@ -11,9 +11,9 @@ use Application\Form\Usuarios\UsuariosFormValidator;
 class UsuariosController extends AbstractActionController
 {
 
-	private $usuariosBO;
+    private $usuariosBO;
 
-	public function getUsuariosBO()
+    public function getUsuariosBO()
     {
         if (!$this->usuariosBO) {
             $sm = $this->getServiceLocator();

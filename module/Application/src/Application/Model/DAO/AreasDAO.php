@@ -30,9 +30,11 @@ class AreasDAO
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
         $select->from('areas');
-        $select->where(array(
+        $select->where(
+            array(
             'areas.areas_estado' => 'A',
-        ));        
+            )
+        );        
         $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }

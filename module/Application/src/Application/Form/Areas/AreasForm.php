@@ -64,12 +64,14 @@ class AreasForm extends Form
                 'id' => 'guardar',
             )
         );
-        $guardar->setOptions(array(
+        $guardar->setOptions(
+            array(
             'label' => '<i class="glyphicon glyphicon-floppy-disk"></i>',
             'label_options' => array(
                 'disable_html_escape' => true,
             )
-        ));
+            )
+        );
 
         $this->add($areas_id);
         $this->add($areas_nombre);

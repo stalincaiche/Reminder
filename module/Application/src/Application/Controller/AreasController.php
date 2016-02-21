@@ -11,9 +11,9 @@ use Application\Form\Areas\AreasFormValidator;
 class AreasController extends AbstractActionController
 {
 
-	private $areasBO;
+    private $areasBO;
 
-	public function getAreasBO()
+    public function getAreasBO()
     {
         if (!$this->areasBO) {
             $sm = $this->getServiceLocator();

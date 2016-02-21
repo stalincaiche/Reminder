@@ -64,7 +64,7 @@ class EtiquetasBO
             $resExistente = $etiquetasDAO->obtenerPorNombre($etiqueta->getEtiquetasNombre());
             
             $objetosEtiquetasDAO = new ObjetosEtiquetasDAO($this->objetosEtiquetasTableGateway);
-            if($resExistente->count() == 0){
+            if($resExistente->count() == 0) {
                 //guarda la etiqueta
                 $eti = $etiquetasDAO->guardar($etiqueta);                
 
@@ -82,7 +82,7 @@ class EtiquetasBO
 
                 $relacion = $objetosEtiquetasDAO->obtenerPorRelacion($formData["objetos_id"], $res->getEtiquetasId());
 
-                if($relacion->count() == 0){
+                if($relacion->count() == 0) {
                     //solo relaciona la etiqueta
                     $bjetosEtiquetas = new ObjetosEtiquetas();
                     $bjetosEtiquetas->setObjetosId($formData["objetos_id"]);
