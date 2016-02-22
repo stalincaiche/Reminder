@@ -154,6 +154,22 @@ class ActividadesForm extends Form
             )
         ));
 
+        $generar = new Element\Button('generar');
+        $generar->setAttributes(
+            array(
+                'class' => 'btn btn-success mr5',
+                'onclick' =>  '/application/actividades/bitacora2',
+                'type' => 'button',
+                'id' => 'generar',
+            )
+        );
+        // $generar->setOptions(array(
+        //     'label' => '<i class="glyphicon glyphicon-floppy-disk"></i>',
+        //     'label_options' => array(
+        //         'disable_html_escape' => true,
+        //     )
+        // ));
+
         $this->add($actividades_id);
         $this->add($actividades_nombre);
         $this->add($actividades_fecha);
@@ -165,5 +181,6 @@ class ActividadesForm extends Form
 
         
         $this->add($guardar);    
+        $this->add($generar);    
     }
 }

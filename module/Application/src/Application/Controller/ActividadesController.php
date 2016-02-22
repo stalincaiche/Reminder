@@ -190,7 +190,7 @@ class ActividadesController extends AbstractActionController
         // agregando scripts necesarios
         $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
         $script = $renderer->render('application/actividades/js/crear');
-        $renderer->headScript()->appendScript($script, 'text/javascript');
+        $renderer->inlineScript()->appendFile($script, 'text/javascript');
 
         $form = new ActividadesForm();
         $form->get('guardar')->setOptions(
@@ -236,7 +236,7 @@ class ActividadesController extends AbstractActionController
         // agregando scripts necesarios
         $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
         $script = $renderer->render('application/actividades/js/crear');
-        $renderer->headScript()->appendScript($script, 'text/javascript');
+        $renderer->inlineScript()->appendScript($script, 'text/javascript');
 
         $form = new ActividadesForm();
         $form->get('guardar')->setOptions(
@@ -506,14 +506,56 @@ class ActividadesController extends AbstractActionController
         return new ViewModel($datos);
     }
 
+
     public function bitacoraAction()
+    {
+        // agregando scripts necesarios
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+
+        $script = $renderer->render('application/actividades/js/crear');
+        $renderer->inlineScript()->prependFile($script, 'text/javascript');
+
+
+        $form = new ActividadesForm();
+        // $form->get('guardar')->setOptions(
+        //     array(
+        //         'label' => '<i class="glyphicon glyphicon-floppy-disk"></i> Guardar',
+        //         'label_options' => array(
+        //             'disable_html_escape' => true,
+        //         )
+        //     )
+        // );
+        
+        // $form->setAttribute('action', $this->getRequest()->getBaseUrl() . '/application/actividades/guardar2');
+
+        $areas = $this->getAreasBO()->obtenerCombo();
+        $form->get('actividades_area')->setValueOptions($areas);
+
+        $usuarios = $this->getUsuariosBO()->obtenerCombo();
+        $form->get('actividades_responsable')->setValueOptions($usuarios);
+
+        $datos = array(
+            'form' => $form,
+            'title' =>  "BITACORA",
+        );
+        $modelView = new ViewModel($datos);
+        $modelView->setTemplate('application/actividades/bitacora');
+        return $modelView;
+    }
+
+    public function bitacora2Action()
     {
         //php composer.phar require phpoffice/phpexcel
         //'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
+        $renderer = $this->getServiceLocator()->get('ViewManager')->getRenderer();
+
+        $form = new ActividadesForm();
+
+
         $objPHPExcel = new \PHPExcel();
         $i           = 3;
         $secuencial  = 1;
-        $fecha_fin   = date("d-m-Y");
+        $fecha_fin   = $form->getActividadesFechaFin();
         // Set properties
         $objPHPExcel->getProperties()->setCreator("ThinkPHP")
                 ->setLastModifiedBy("Stalin Caiche")
@@ -603,8 +645,8 @@ class ActividadesController extends AbstractActionController
         $layout = $this->layout();
 
 
-        // $modelView = new ViewModel(array('form' => $form));
-        $modelView = new ViewModel(array());
+        $modelView = new ViewModel(array('form' => $form));
+        //$modelView = new ViewModel(array());
         $modelView->setTemplate('application/actividades/bitacora');
         return $modelView;
 

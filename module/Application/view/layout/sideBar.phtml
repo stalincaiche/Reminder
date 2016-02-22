@@ -6,7 +6,7 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+              <img src="<?php echo $this->basePath() ?>/css/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
               <p>Alexander Pierce</p>
@@ -35,21 +35,42 @@
 
               </ul>
             </li>
-            <li class="treeview">
-                <a href="<?php echo $this->url('actividades') ?>"><?php echo $this->translate('Actividades') ?><i class="fa fa-pie-chart"></i></a>
-                <span class="label label-primary pull-right">4</span>
-              <ul class="treeview-menu">
+           <!--  <li class="treeview">
+                </a> -->
+              <!-- <ul class="treeview-menu">
+
                 <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
                 <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
                 <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-              </ul>
-            </li>
+              </ul> -->
+           <!--  </li> -->
             <li>
-              <a href="pages/widgets.html">
-                <i class="fa fa-th"></i> <span>Widgets</span> <small class="label pull-right bg-green">new</small>
+              <a href="<?php echo $this->url('actividades') ?>">
+                <i class="fa fa-list"></i> <span><?php echo $this->translate('Actividades') ?></span> <small class="label pull-right bg-green">new</small>
               </a>
             </li>
-            <li class="treeview">
+            <li>
+              <a href="<?php echo $this->url('etiquetas') ?>">
+                <i class="fa fa-list"></i> <span><?php echo $this->translate('Etiquetas') ?></span> <small class="label pull-right bg-green">new</small>
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo $this->url('administracion') ?>">
+                <i class="fa fa-list"></i> <span><?php echo $this->translate('Administrar') ?></span> <small class="label pull-right bg-green">new</small>
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo $this->url('actividades',
+                            array(
+                                'controller' => 'actividades',
+                                'action' => 'bitacora'
+                            )
+                        )
+                        ?>">
+                <i class="fa fa-list"></i> <span><?php echo $this->translate('Bitacora') ?></span> <small class="label pull-right bg-green">new</small>
+              </a>
+            </li>
+            <!-- <li class="treeview">
               <a href="#">
                 <i class="fa fa-pie-chart"></i>
                 <span>Charts</span>
@@ -87,7 +108,7 @@
                 <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
                 <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
               </ul>
-            </li>
+            </li> -->
           </ul>
         </section>
         <!-- /.sidebar -->
