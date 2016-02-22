@@ -39,9 +39,11 @@ class ObjetosDAO
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
         $select->from('objetos');
-        $select->where(array(
+        $select->where(
+            array(
             'objetos.objetos_actividad_id' => $actividad_id,
-        ));
+            )
+        );
         $select->join(
             'tipo_objeto', 'tipo_objeto.tipo_objeto_id = objetos.objetos_tipo', array(
             'tipo_objeto_nombre', 'tipo_objeto_icono'
@@ -57,9 +59,11 @@ class ObjetosDAO
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
         $select->from('objetos');
-        $select->where(array(
+        $select->where(
+            array(
             'objetos.objetos_nombre' => $nombre,
-        ));        
+            )
+        );        
         $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }
@@ -70,9 +74,11 @@ class ObjetosDAO
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
         $select->from('objetos');
-        $select->where(array(
+        $select->where(
+            array(
             'objetos.objetos_id' => $id,
-        ));        
+            )
+        );        
         $select->join(
             'tipo_objeto', 'tipo_objeto.tipo_objeto_id = objetos.objetos_tipo', array(
             'tipo_objeto_nombre',

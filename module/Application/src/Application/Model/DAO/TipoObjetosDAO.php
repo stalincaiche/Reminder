@@ -30,9 +30,11 @@ class TipoObjetosDAO
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
         $select->from('tipo_objeto');
-        $select->where(array(
+        $select->where(
+            array(
             'tipo_objeto.tipo_objeto_estado' => 'A',
-        ));        
+            )
+        );        
         $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }

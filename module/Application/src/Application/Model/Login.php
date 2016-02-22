@@ -43,39 +43,39 @@ class Login
             $result = $this->auth->authenticate($this->authAdapter);
 
             switch ($result->getCode()) {
-                case Result::FAILURE_IDENTITY_NOT_FOUND:
+            case Result::FAILURE_IDENTITY_NOT_FOUND:
 
-                    $this->message = $this->messages[self::NOT_IDENTITY];
-                    $this->tituloMessage = "Login Invalido";
+                $this->message = $this->messages[self::NOT_IDENTITY];
+                $this->tituloMessage = "Login Invalido";
 
-                    throw new \Exception($this->messages[self::NOT_IDENTITY]);
+                throw new \Exception($this->messages[self::NOT_IDENTITY]);
                     break;
 
-                case Result::FAILURE_CREDENTIAL_INVALID:
+            case Result::FAILURE_CREDENTIAL_INVALID:
 
-                    $this->message = $this->messages[self::INVALID_CREDENTIAL];
-                    $this->tituloMessage = "Login Invalido";
+                $this->message = $this->messages[self::INVALID_CREDENTIAL];
+                $this->tituloMessage = "Login Invalido";
 
-                    throw new \Exception($this->messages[self::INVALID_CREDENTIAL]);
+                throw new \Exception($this->messages[self::INVALID_CREDENTIAL]);
                     break;
 
-                case Result::SUCCESS:
-                    if ($result->isValid()) {
-                        $data = $this->authAdapter->getResultRowObject();
-                        $this->auth->getStorage()->write($data);
-                        $this->message = 'Bienvenido ' . $username;
-                        $this->tituloMessage = "Login Correcto";
-                    } else {
-                        $this->message = $this->messages[self::INVALID_USER];
-                        throw new \Exception($this->messages[self::INVALID_USER]);
-                    }
-                    break;
+            case Result::SUCCESS:
+                if ($result->isValid()) {
+                    $data = $this->authAdapter->getResultRowObject();
+                    $this->auth->getStorage()->write($data);
+                    $this->message = 'Bienvenido ' . $username;
+                    $this->tituloMessage = "Login Correcto";
+                } else {
+                    $this->message = $this->messages[self::INVALID_USER];
+                    throw new \Exception($this->messages[self::INVALID_USER]);
+                }
+                break;
 
-                default:
-                    $this->message = $this->messages[self::INVALID_LOGIN];
-                    $this->tituloMessage = "Login Invalido";
+            default:
+                $this->message = $this->messages[self::INVALID_LOGIN];
+                $this->tituloMessage = "Login Invalido";
 
-                    throw new \Exception($this->messages[self::INVALID_LOGIN]);
+                throw new \Exception($this->messages[self::INVALID_LOGIN]);
                     break;
             }
         } else {

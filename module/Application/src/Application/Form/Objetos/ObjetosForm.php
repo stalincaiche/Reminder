@@ -76,12 +76,14 @@ class ObjetosForm extends Form
                 'id' => 'guardar',
             )
         );
-        $guardar->setOptions(array(
+        $guardar->setOptions(
+            array(
             'label' => '<i class="glyphicon glyphicon-floppy-disk"></i>',
             'label_options' => array(
                 'disable_html_escape' => true,
             )
-        ));
+            )
+        );
 
         $etiquetas_id = new Element\Hidden('etiquetas_id');        
         $etiquetas_id->setAttributes(

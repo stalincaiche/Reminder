@@ -11,9 +11,9 @@ use Application\Form\Tipoobjetos\TipoobjetosFormValidator;
 class TipoobjetoController extends AbstractActionController
 {
 
-	private $tipoObjetosBO;
+    private $tipoObjetosBO;
 
-	public function getTipoObjetosBO()
+    public function getTipoObjetosBO()
     {
         if (!$this->tipoObjetosBO) {
             $sm = $this->getServiceLocator();

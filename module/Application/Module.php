@@ -2,8 +2,8 @@
 /**
  * Zend Framework (http://framework.zend.com/)
  *
- * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
@@ -50,7 +50,7 @@ class Module
             ),
             200
         );
-        
+
 
         $moduleRouteListener = new ModuleRouteListener();
         $eventManager = $e->getApplication()->getEventManager();
@@ -102,14 +102,13 @@ class Module
         if ($controller === "Application\Controller\Admin" && in_array($action, array('colaborar'))) {
 
             return;
-            
+
         }
 
         // ¿es el login o se está autenticando ?
         if ($controller === "Application\Controller\Login" && in_array($action, array('index','autenticar','logout'))) {
 
-            if($action =="logout")
-            {
+            if ($action =="logout") {
                 return;
             }
             if ($sesion->offsetExists('user_username')) {
@@ -129,7 +128,7 @@ class Module
         //Si no hay acl con esto se valida que inicie sesión
         if (!$sesion->offsetExists('user_username')) {
             $matches->setParam("controller", "Application\Controller\Login");
-            $matches->setParam("action", "index");            
+            $matches->setParam("action", "index");
             return;
         }
     }
@@ -154,8 +153,8 @@ class Module
     {
         return array(
             'factories' => array(
-                'Application\Controller\Login' => function ($sm)
-                {
+                'Application\Controller\Login' => function ($sm) {
+
                     $locator = $sm->getServiceLocator();
                     //$logger = $locator->get('Zend\Log');
                     $controller = new \Application\Controller\LoginController();
@@ -172,98 +171,98 @@ class Module
     {
         return array(
             'factories' => array(
-                'Application\Model\Login' => function ($sm)
-                {
+                'Application\Model\Login' => function ($sm) {
+
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new \Application\Model\Login($dbAdapter);
                 },
-                'Application\Model\ActividadesBO' => function ($sm)
-                {
+                'Application\Model\ActividadesBO' => function ($sm) {
+
                     $tableGateway = $sm->get("ActividadesTableGateway");
                     $actividadesBO = new ActividadesBO($tableGateway);
                     return $actividadesBO;
                 },
-                'ActividadesTableGateway' => function ($sm)
-                {
+                'ActividadesTableGateway' => function ($sm) {
+
                     $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(New Actividades());
-                    return new TableGateway("actividades", $dbAdapter, NULL, $resultSetPrototype);
+                    return new TableGateway("actividades", $dbAdapter, null, $resultSetPrototype);
                 },
-                'Application\Model\ObjetosBO' => function ($sm)
-                {
+                'Application\Model\ObjetosBO' => function ($sm) {
+
                     $tableGateway = $sm->get("ObjetosTableGateway");
-                    $ObjetosBO = new ObjetosBO($tableGateway);
-                    return $ObjetosBO;
+                    $objetosBO = new ObjetosBO($tableGateway);
+                    return $objetosBO;
                 },
-                'ObjetosTableGateway' => function ($sm)
-                {
+                'ObjetosTableGateway' => function ($sm) {
+
                     $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(New Objetos());
-                    return new TableGateway("objetos", $dbAdapter, NULL, $resultSetPrototype);
+                    return new TableGateway("objetos", $dbAdapter, null, $resultSetPrototype);
                 },
-                'Application\Model\EtiquetasBO' => function ($sm)
-                {
+                'Application\Model\EtiquetasBO' => function ($sm) {
+
                     $etiquetasTableGateway = $sm->get("EtiquetasTableGateway");
                     $objetosEtiquetasTableGateway = $sm->get("ObjetosEtiquetasTableGateway");
-                    $EtiquetasBO = new EtiquetasBO($etiquetasTableGateway,$objetosEtiquetasTableGateway);
-                    return $EtiquetasBO;
+                    $etiquetasBO = new EtiquetasBO($etiquetasTableGateway, $objetosEtiquetasTableGateway);
+                    return $etiquetasBO;
                 },
-                'EtiquetasTableGateway' => function ($sm)
-                {
+                'EtiquetasTableGateway' => function ($sm) {
+
                     $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(New Etiquetas());
-                    return new TableGateway("etiquetas", $dbAdapter, NULL, $resultSetPrototype);
+                    return new TableGateway("etiquetas", $dbAdapter, null, $resultSetPrototype);
                 },
-                'ObjetosEtiquetasTableGateway' => function ($sm)
-                {
+                'ObjetosEtiquetasTableGateway' => function ($sm) {
+
                     $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(New ObjetosEtiquetas());
-                    return new TableGateway("objetos_etiquetas", $dbAdapter, NULL, $resultSetPrototype);
+                    return new TableGateway("objetos_etiquetas", $dbAdapter, null, $resultSetPrototype);
                 },
-                'Application\Model\TipoObjetosBO' => function ($sm)
-                {
+                'Application\Model\TipoObjetosBO' => function ($sm) {
+
                     $tableGateway = $sm->get("TipoObjetosTableGateway");
                     $tipoObjetosBO = new TipoObjetosBO($tableGateway);
                     return $tipoObjetosBO;
                 },
-                'TipoObjetosTableGateway' => function ($sm)
-                {
+                'TipoObjetosTableGateway' => function ($sm) {
+
                     $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(New TipoObjetos());
-                    return new TableGateway("tipo_objeto", $dbAdapter, NULL, $resultSetPrototype);
+                    return new TableGateway("tipo_objeto", $dbAdapter, null, $resultSetPrototype);
                 },
-                'Application\Model\UsuariosBO' => function ($sm)
-                {
+                'Application\Model\UsuariosBO' => function ($sm) {
+
                     $tableGateway = $sm->get("UsuariosTableGateway");
                     $usuariosBO = new UsuariosBO($tableGateway);
                     return $usuariosBO;
                 },
-                'UsuariosTableGateway' => function ($sm)
-                {
+                'UsuariosTableGateway' => function ($sm) {
+
                     $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(New Usuarios());
-                    return new TableGateway("usuarios", $dbAdapter, NULL, $resultSetPrototype);
+                    return new TableGateway("usuarios", $dbAdapter, null, $resultSetPrototype);
                 },
-                'Application\Model\AreasBO' => function ($sm)
-                {
+                'Application\Model\AreasBO' => function ($sm) {
+
                     $tableGateway = $sm->get("AreasTableGateway");
                     $areasBO = new AreasBO($tableGateway);
                     return $areasBO;
                 },
-                'AreasTableGateway' => function ($sm)
-                {
+                'AreasTableGateway' => function ($sm) {
+
                     $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(New Areas());
-                    return new TableGateway("areas", $dbAdapter, NULL, $resultSetPrototype);
+                    return new TableGateway("areas", $dbAdapter, null, $resultSetPrototype);
                 },
-                
+
             ) ,
         );
     }
@@ -272,11 +271,11 @@ class Module
     {
         return array(
             'factories' => array(
-                'RetornaEtiquetas' => function ($sm)
-                {
+                'RetornaEtiquetas' => function ($sm) {
+
                     $locator = $sm->getServiceLocator();
-                    $EtiquetasBO = $locator->get('Application\Model\EtiquetasBO');                    
-                    return new View\Helper\RetornaEtiquetas($EtiquetasBO);
+                    $etiquetasBO = $locator->get('Application\Model\EtiquetasBO');
+                    return new View\Helper\RetornaEtiquetas($etiquetasBO);
                 }
                 ,
             ) ,

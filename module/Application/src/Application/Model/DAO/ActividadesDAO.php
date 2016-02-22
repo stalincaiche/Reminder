@@ -39,9 +39,11 @@ class ActividadesDAO
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
         $select->from('actividades');
-        $select->where(array(
+        $select->where(
+            array(
             'actividades.actividades_estado' => 'A',
-        ));
+            )
+        );
         $select->join(
             'usuarios', 'usuarios.usuarios_id = actividades.actividades_responsable', array(
             'usuarios_username', 'usuarios_nombres'
@@ -57,10 +59,12 @@ class ActividadesDAO
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
         $select->from('actividades');
-        $select->where(array(
+        $select->where(
+            array(
             'actividades.actividades_estado' => 'A',
             'actividades.actividades_responsable' => $usuarios_id,
-        ));
+            )
+        );
         $select->join(
             'usuarios', 'usuarios.usuarios_id = actividades.actividades_responsable', array(
             'usuarios_username', 'usuarios_nombres'
@@ -90,13 +94,13 @@ class ActividadesDAO
     {
         $id = (int)$actividad->getActividadesId();
 
-        if($actividad->getActividadesFecha()){
+        if($actividad->getActividadesFecha()) {
             $fecha = $actividad->getActividadesFecha();    
         }else{
             $fecha = null;
         }
 
-        if($actividad->getActividadesFechaFin()){
+        if($actividad->getActividadesFechaFin()) {
             $fecha_fin = $actividad->getActividadesFechaFin();    
         }else{
             $fecha_fin = null;

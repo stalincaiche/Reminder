@@ -12,9 +12,9 @@ class EtiquetasController extends AbstractActionController
 {
 
     private $objetosBO;
-	private $etiquetasBO;
+    private $etiquetasBO;
 
-	public function getObjetosBO()
+    public function getObjetosBO()
     {
         if (!$this->objetosBO) {
             $sm = $this->getServiceLocator();
@@ -48,13 +48,13 @@ class EtiquetasController extends AbstractActionController
         $formBusqueda->setAttribute('class', 'form-inline');
         
         $formBusqueda->get('guardar')->setOptions(
-                array(
+            array(
                     'label' => '<i class="glyphicon glyphicon-search"></i> Buscar',
                     'label_options' => array(
                         'disable_html_escape' => true,
                     )
                 )
-            );
+        );
         $formBusqueda->get('guardar')->setAttribute('class', 'btn btn-primary');
 
         $formBusqueda->get('etiquetas_nombre')->setAttribute('placeholder', 'Busca una Etiqueta');

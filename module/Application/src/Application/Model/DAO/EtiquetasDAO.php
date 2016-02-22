@@ -56,9 +56,11 @@ class EtiquetasDAO
         $sql = new Sql($this->tableGateway->adapter);
         $select = $sql->select();
         $select->from('etiquetas');
-        $select->where(array(
+        $select->where(
+            array(
             'etiquetas.etiquetas_nombre' => $nombre,
-        ));        
+            )
+        );        
         $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }
